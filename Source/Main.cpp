@@ -18,12 +18,23 @@
  */
 
 #include "Globals.hpp"
+#include "Game.hpp"
 
 using std::cout;
 using std::endl;
 
-int main() {
-    cout << "PacMan++" << endl;
+int main()
+{
+    Game *game = new Game();
+
+    game->Init();
+
+    while (!game->ShouldExit())
+    {
+        game->Update();
+    }
+
+    game->Cleanup();
 
     return 0;
 }
