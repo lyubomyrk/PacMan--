@@ -11,11 +11,11 @@ file(GLOB SOURCES "Source/*.cpp")
 add_executable (${EXECUTABLE} ${SOURCES})
 
 # header files
-include_directories("Source/Include/")
+include_directories("Source/Include")
 
-target_compile_features(${EXECUTABLE} PUBLIC cxx_std_20)
+set_property(TARGET ${EXECUTABLE} PROPERTY CXX_STANDARD 20)
 
-# if (UNIX)
-#   target_include_directories(${EXECUTABLE} PRIVATE Deps/raylib-linux/include)
-#   target_link_libraries(${EXECUTABLE} PRIVATE ${CMAKE_SOURCE_DIR}/Deps/raylib-linux/lib/libraylib.a)
-# endif()
+if (UNIX)
+  target_include_directories(${EXECUTABLE} PRIVATE Deps/raylib-linux/include)
+  target_link_libraries(${EXECUTABLE} PRIVATE ${CMAKE_SOURCE_DIR}/Deps/raylib-linux/lib/libraylib.a)
+endif()
