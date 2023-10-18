@@ -8,14 +8,15 @@ set(EXECUTABLE "PacMan++")
 
 # source files
 file(GLOB SOURCES "Source/*.cpp")
-add_executable (${EXECUTABLE} ${SOURCES})
+file(GLOB HEADERS "Source/Include/*.hpp")
+add_executable (${EXECUTABLE} ${SOURCES} ${HEADERS})
 
 # header files
-include_directories("Source/Include")
+target_include_directories(${EXECUTABLE} PRIVATE Source/Include)
 
 set_property(TARGET ${EXECUTABLE} PROPERTY CXX_STANDARD 20)
 
 if (UNIX)
-  target_include_directories(${EXECUTABLE} PRIVATE Deps/raylib-linux/include)
+  target_include_directories(${EXECUTABLE} PRIVATE Deps/raylib-linux/include/)
   target_link_libraries(${EXECUTABLE} PRIVATE ${CMAKE_SOURCE_DIR}/Deps/raylib-linux/lib/libraylib.a)
 endif()
