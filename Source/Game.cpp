@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Globals.hpp"
+#include "AssetManager.hpp"
 
 using namespace std;
 
@@ -24,6 +25,12 @@ bool Game::Init()
         return false;
     }
 
+    if (!AssetManager::LoadAllAssets())
+    {
+        cout << "Failed to load assets.\n";
+        return false;
+    }
+
     return true;
 }
 
@@ -36,6 +43,8 @@ void Game::Update()
 {
     BeginDrawing();
     ClearBackground(BLACK);
+    DrawFPS(2, 2);
+    DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
     EndDrawing();
 }
 
