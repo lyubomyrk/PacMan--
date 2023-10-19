@@ -8,7 +8,7 @@ set(EXECUTABLE "PacMan++")
 
 # source files
 file(GLOB SOURCES "Source/*.cpp")
-file(GLOB HEADERS "Source/Include/*.hpp")
+file(GLOB_RECURSE HEADERS "Source/Include/*.hpp")
 add_executable (${EXECUTABLE} ${SOURCES} ${HEADERS})
 
 # header files
