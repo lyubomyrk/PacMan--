@@ -14,7 +14,7 @@ add_executable (${EXECUTABLE} ${SOURCES} ${HEADERS})
 # header files
 target_include_directories(${EXECUTABLE} PRIVATE Source/Include)
 
-set_property(TARGET ${EXECUTABLE} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${EXECUTABLE} PROPERTY CXX_STANDARD 17)
 
 if (UNIX)
   target_include_directories(${EXECUTABLE} PRIVATE Deps/raylib-linux/include/)
