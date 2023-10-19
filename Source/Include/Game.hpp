@@ -23,6 +23,7 @@
 #include "GameBoard.hpp"
 #include "DirectionComponent.hpp"
 #include "PlayerDirectionComponent.hpp"
+#include "BlinkyDirectionComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PacMan.hpp"
 #include "Ghost.hpp"

@@ -57,7 +57,7 @@ bool Game::Init()
     auto movementComponent = new MovementComponent(_gameBoard);
     _pacman = new PacMan(playerDirectionComponent, movementComponent);
 
-    auto blinkyDirectionComponent = new PlayerDirectionComponent(_gameBoard);
+    auto blinkyDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
     _blinky = new Ghost(
         RED,
         RedGhostStartingPosition,

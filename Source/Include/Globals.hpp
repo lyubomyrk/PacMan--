@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 #include "raylib.h"
 #include "raymath.h"
 
@@ -52,6 +53,7 @@ const int SpriteUnitOffset = SpriteUnit / 2;
 
 const int BoardRows = 36;
 const int BoardColumns = 28;
+const float LongestDistance = sqrt(pow(BoardColumns * TileUnit, 2) + pow(BoardRows * TileUnit, 2));
 // clang-format off
 const char Board[BoardRows][BoardColumns] = {
   {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',},
@@ -141,4 +143,8 @@ inline bool operator==(Vector2 left, Vector2 right)
 inline bool operator!=(Vector2 left, Vector2 right)
 {
     return !(left == right);
+}
+inline Vector2 operator-(Vector2 right)
+{
+    return {-right.x, -right.y};
 }
