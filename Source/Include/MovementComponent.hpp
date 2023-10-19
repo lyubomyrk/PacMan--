@@ -1,5 +1,5 @@
 /*
- * Created on Tue Oct 17 2023
+ * Created on Wed Oct 18 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -20,21 +20,14 @@
 #pragma once
 
 #include "Globals.hpp"
-#include "MovementComponent.hpp"
-#include "PacMan.hpp"
+#include "Entity.hpp"
 
-class Game
+class MovementComponent
 {
-    MovementComponent *_movementComponent;
-    PacMan *_pacman;
-
 public:
-    Game();
+    MovementComponent();
 
-    bool Init();
-    bool ShouldExit();
-    void Update();
-    void Cleanup();
+    void Update(Entity *entity);
 
 private:
 };

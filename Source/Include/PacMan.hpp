@@ -20,21 +20,38 @@
 #pragma once
 
 #include "Globals.hpp"
+#include "Entity.hpp"
 #include "MovementComponent.hpp"
-#include "PacMan.hpp"
 
-class Game
+class PacMan : public Entity
 {
+    Texture2D _spritesheet;
+    Color _tint;
+    int _frameTicks;
+    const int _frameRate;
+    int _frame;
+    const int _maxFrame;
+
+    Vector2 _position;
+    Vector2 _normDir;
+    Vector2 _normDirBuffer;
+
+    float _speed;
     MovementComponent *_movementComponent;
-    PacMan *_pacman;
 
 public:
-    Game();
+    PacMan(MovementComponent *movementComponent);
+    ~PacMan() override;
 
-    bool Init();
-    bool ShouldExit();
+    void HandleInput();
     void Update();
-    void Cleanup();
+    void Draw();
+
+    Vector2 GetPosition() const override;
+    void SetPosition(Vector2 position) override;
+    Vector2 GetDirection() const override;
+    float GetSpeed() const override;
+    Rectangle GetRectangle() const override;
 
 private:
 };

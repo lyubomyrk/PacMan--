@@ -50,6 +50,9 @@ bool Game::Init()
         return false;
     }
 
+    _movementComponent = new MovementComponent();
+    _pacman = new PacMan(_movementComponent);
+
     return true;
 }
 
@@ -60,15 +63,23 @@ bool Game::ShouldExit()
 
 void Game::Update()
 {
+    _pacman->HandleInput();
+    _pacman->Update();
+
     BeginDrawing();
     ClearBackground(BLACK);
     DrawFPS(2, 2);
     DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
+    _pacman->Draw();
     EndDrawing();
 }
 
 void Game::Cleanup()
 {
+    delete _pacman;
+
+    AssetManager::UnloadAllAssets();
+
     CloseAudioDevice();
     CloseWindow();
 }
