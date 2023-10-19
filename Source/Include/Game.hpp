@@ -25,6 +25,7 @@
 
 class Game
 {
+    vector<vector<Tile>> _map;
     MovementComponent *_movementComponent;
     PacMan *_pacman;
 

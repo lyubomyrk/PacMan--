@@ -50,6 +50,15 @@ bool Game::Init()
         return false;
     }
 
+    for (int i = 0; i < BoardRows; i++)
+    {
+        _map.push_back(vector<Tile>());
+        for (int j = 0; j < BoardColumns; j++)
+        {
+            _map[i].push_back((Tile)Board[i][j]);
+        }
+    }
+
     _movementComponent = new MovementComponent();
     _pacman = new PacMan(_movementComponent);
 

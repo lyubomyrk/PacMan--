@@ -21,13 +21,17 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "raylib.h"
+#include "raymath.h"
+
+using namespace std;
 
 constexpr bool DEBUG = true;
 
 const int WindowWidth = 672;
 const int WindowHeight = 888;
-const std::string WindowTitle = "PacMan++";
+const string WindowTitle = "PacMan++";
 
 const int TargetFps = 60;
 
@@ -107,15 +111,6 @@ const Vector2 OrangeGhostStartingPosition = {
 const Vector2 OrangeGhostScatterTargetPosition = {
     0, 35 * TileUnit + TileUnitOffset};
 
-const Vector2 Directions[4] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
-enum class Direction
-{
-    Up = 0,
-    Right,
-    Down,
-    Left
-};
-
 const int PacmanSpeed = 2;
 const int PacmanMovingFrames = 3;
 const int PacmanMovingFps = 15;
@@ -127,3 +122,22 @@ const int GhostMovingFps = 15;
 
 const float IntroTime = 5.0;
 const float EnergizerTime = 5.0;
+
+class Direction
+{
+public:
+    Direction() = delete;
+
+    static Vector2 Up() { return {0., -1.}; }
+    static Vector2 Down() { return {0., 1.}; }
+    static Vector2 Right() { return {1., 0.}; }
+    static Vector2 Left() { return {-1., 0.}; }
+};
+inline bool operator==(Vector2 left, Vector2 right)
+{
+    return left.x == right.x && left.y == right.y;
+}
+inline bool operator!=(Vector2 left, Vector2 right)
+{
+    return !(left == right);
+}
