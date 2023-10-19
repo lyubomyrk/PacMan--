@@ -53,8 +53,9 @@ bool Game::Init()
     _gameBoard = new GameBoard();
     _gameBoard->Reset();
 
+    _directionComponent = new DirectionComponent(_gameBoard);
     _movementComponent = new MovementComponent(_gameBoard);
-    _pacman = new PacMan(_movementComponent);
+    _pacman = new PacMan(_directionComponent, _movementComponent);
 
     return true;
 }

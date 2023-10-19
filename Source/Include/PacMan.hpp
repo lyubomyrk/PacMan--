@@ -22,6 +22,7 @@
 #include "Globals.hpp"
 #include "Entity.hpp"
 #include "MovementComponent.hpp"
+#include "DirectionComponent.hpp"
 
 class PacMan : public Entity
 {
@@ -35,12 +36,13 @@ class PacMan : public Entity
     Vector2 _position;
     Vector2 _normDir;
     Vector2 _normDirBuffer;
+    DirectionComponent *_directionComponent;
 
     float _speed;
     MovementComponent *_movementComponent;
 
 public:
-    PacMan(MovementComponent *movementComponent);
+    PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
 
     void HandleInput();
@@ -50,6 +52,8 @@ public:
     Vector2 GetPosition() const override;
     void SetPosition(Vector2 position) override;
     Vector2 GetDirection() const override;
+    void SetDirection(Vector2 direction) override;
+    Vector2 GetDirectionBuffer() const override;
     float GetSpeed() const override;
     Rectangle GetRectangle() const override;
 

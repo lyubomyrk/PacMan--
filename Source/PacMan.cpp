@@ -20,8 +20,8 @@
 #include "PacMan.hpp"
 #include "AssetManager.hpp"
 
-PacMan::PacMan(MovementComponent *movementComponent) : _frameRate(PacmanMovingFps),
-                                                       _maxFrame(PacmanMovingFps)
+PacMan::PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent) : _frameRate(PacmanMovingFps),
+                                                                                               _maxFrame(PacmanMovingFps)
 {
     _spritesheet = AssetManager::TPacMan32;
     _tint = WHITE;
@@ -31,6 +31,7 @@ PacMan::PacMan(MovementComponent *movementComponent) : _frameRate(PacmanMovingFp
     _position = PacmanStartingPosition;
     _normDir = Direction::Left();
     _normDirBuffer = _normDir;
+    _directionComponent = directionComponent;
     _speed = PacmanSpeed;
     _movementComponent = movementComponent;
 }
@@ -61,14 +62,7 @@ void PacMan::HandleInput()
 
 void PacMan::Update()
 {
-    Rectangle _normDirBufferRec = {
-        _position.x - TileUnitOffset + _normDirBuffer.x * TileUnit,
-        _position.y - TileUnitOffset + _normDirBuffer.y * TileUnit,
-        TileUnit,
-        TileUnit};
-
-    _normDir = _normDirBuffer;
-
+    _directionComponent->Update(this);
     _movementComponent->Update(this);
 
     if (_frameTicks++ >= (TargetFps / _frameRate))
@@ -124,6 +118,16 @@ void PacMan::SetPosition(Vector2 position)
 Vector2 PacMan::GetDirection() const
 {
     return _normDir;
+}
+
+void PacMan::SetDirection(Vector2 direction)
+{
+    _normDir = direction;
+}
+
+Vector2 PacMan::GetDirectionBuffer() const
+{
+    return _normDirBuffer;
 }
 
 float PacMan::GetSpeed() const

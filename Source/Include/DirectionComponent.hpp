@@ -20,16 +20,17 @@
 #pragma once
 
 #include "Globals.hpp"
+#include "GameBoard.hpp"
+#include "Entity.hpp"
 
-class Entity
+class DirectionComponent
 {
+    GameBoard *_gameBoard;
+
 public:
-    virtual ~Entity() {}
-    virtual Vector2 GetPosition() const = 0;
-    virtual void SetPosition(Vector2 position) = 0;
-    virtual Vector2 GetDirection() const = 0;
-    virtual void SetDirection(Vector2 direction) = 0;
-    virtual Vector2 GetDirectionBuffer() const = 0;
-    virtual float GetSpeed() const = 0;
-    virtual Rectangle GetRectangle() const = 0;
+    DirectionComponent(GameBoard *gameBoard);
+
+    void Update(Entity *entity);
+
+private:
 };

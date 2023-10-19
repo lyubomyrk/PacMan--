@@ -17,19 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "DirectionComponent.hpp"
 
-#include "Globals.hpp"
-
-class Entity
+DirectionComponent::DirectionComponent(GameBoard *gameBoard)
 {
-public:
-    virtual ~Entity() {}
-    virtual Vector2 GetPosition() const = 0;
-    virtual void SetPosition(Vector2 position) = 0;
-    virtual Vector2 GetDirection() const = 0;
-    virtual void SetDirection(Vector2 direction) = 0;
-    virtual Vector2 GetDirectionBuffer() const = 0;
-    virtual float GetSpeed() const = 0;
-    virtual Rectangle GetRectangle() const = 0;
-};
+    _gameBoard = gameBoard;
+}
+
+void DirectionComponent::Update(Entity *entity)
+{
+    Vector2 position = entity->GetPosition();
+    Vector2 dirBuffer = entity->GetDirectionBuffer();
+
+    Vector2 posBuffer = Vector2Add(position, Vector2Scale(dirBuffer, TileUnit));
+
+    if (!_gameBoard->IsThereWall(posBuffer))
+    {
+        entity->SetDirection(dirBuffer);
+    }
+}
