@@ -1,5 +1,5 @@
 /*
- * Created on Tue Oct 17 2023
+ * Created on Thu Oct 19 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -20,23 +20,16 @@
 #pragma once
 
 #include "Globals.hpp"
-#include "GameBoard.hpp"
-#include "MovementComponent.hpp"
-#include "PacMan.hpp"
 
-class Game
+class GameBoard
 {
-    GameBoard *_gameBoard;
-    MovementComponent *_movementComponent;
-    PacMan *_pacman;
+    vector<vector<Tile>> _gameBoard;
 
 public:
-    Game();
+    GameBoard();
 
-    bool Init();
-    bool ShouldExit();
-    void Update();
-    void Cleanup();
+    void Reset();
+    bool IsThereWall(Vector2 position);
 
 private:
 };

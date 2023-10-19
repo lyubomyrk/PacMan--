@@ -20,12 +20,15 @@
 #pragma once
 
 #include "Globals.hpp"
+#include "GameBoard.hpp"
 #include "Entity.hpp"
 
 class MovementComponent
 {
+    GameBoard *_gameBoard;
+
 public:
-    MovementComponent();
+    MovementComponent(GameBoard *gameBoard);
 
     void Update(Entity *entity);
 

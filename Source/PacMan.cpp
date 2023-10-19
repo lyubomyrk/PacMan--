@@ -134,5 +134,6 @@ float PacMan::GetSpeed() const
 Rectangle PacMan::GetRectangle() const
 {
     return {
-        _position.x * TileUnit, _position.y * TileUnit, (float)TileUnit, (float)TileUnit};
+        _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,
+        (float)TileUnit, (float)TileUnit};
 }

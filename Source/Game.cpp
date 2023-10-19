@@ -50,8 +50,10 @@ bool Game::Init()
         return false;
     }
 
-    initBoard();
-    _movementComponent = new MovementComponent();
+    _gameBoard = new GameBoard();
+    _gameBoard->Reset();
+
+    _movementComponent = new MovementComponent(_gameBoard);
     _pacman = new PacMan(_movementComponent);
 
     return true;
@@ -83,16 +85,4 @@ void Game::Cleanup()
 
     CloseAudioDevice();
     CloseWindow();
-}
-
-void Game::initBoard()
-{
-    for (int i = 0; i < BoardRows; i++)
-    {
-        _gameBoard.push_back(vector<Tile>());
-        for (int j = 0; j < BoardColumns; j++)
-        {
-            _gameBoard[i].push_back((Tile)Board[i][j]);
-        }
-    }
 }

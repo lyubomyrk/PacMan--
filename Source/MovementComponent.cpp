@@ -1,7 +1,8 @@
 #include "MovementComponent.hpp"
 
-MovementComponent::MovementComponent()
+MovementComponent::MovementComponent(GameBoard *gameBoard)
 {
+    _gameBoard = gameBoard;
 }
 
 void MovementComponent::Update(Entity *entity)
@@ -11,5 +12,9 @@ void MovementComponent::Update(Entity *entity)
     float speed = entity->GetSpeed();
 
     Vector2 newPos = Vector2Add(pos, Vector2Scale(dir, speed));
-    entity->SetPosition(newPos);
+
+    if (!_gameBoard->IsThereWall(newPos))
+    {
+        entity->SetPosition(newPos);
+    }
 }
