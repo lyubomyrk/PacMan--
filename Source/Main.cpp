@@ -27,11 +27,12 @@ int main()
 {
     Game *game = new Game();
 
-    game->Init();
-
-    while (!game->ShouldExit())
+    if (game->Init())
     {
-        game->Update();
+        while (!game->ShouldExit())
+        {
+            game->Update();
+        }
     }
 
     game->Cleanup();
