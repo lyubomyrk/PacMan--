@@ -22,15 +22,16 @@
 #include "Globals.hpp"
 #include "GameBoard.hpp"
 #include "DirectionComponent.hpp"
+#include "PlayerDirectionComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PacMan.hpp"
+#include "Ghost.hpp"
 
 class Game
 {
     GameBoard *_gameBoard;
-    DirectionComponent *_directionComponent;
-    MovementComponent *_movementComponent;
     PacMan *_pacman;
+    Ghost *_blinky;
 
 public:
     Game();

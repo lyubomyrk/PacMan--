@@ -16,23 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#pragma once
 
-#include "DirectionComponent.hpp"
+#include "Globals.hpp"
+#include "Entity.hpp"
 
-DirectionComponent::DirectionComponent(GameBoard *gameBoard)
+class MovingEntity
 {
-    _gameBoard = gameBoard;
-}
-
-void DirectionComponent::Update(Entity *entity)
-{
-    Vector2 position = entity->GetPosition();
-    Vector2 dirBuffer = entity->GetDirectionBuffer();
-
-    Vector2 posBuffer = Vector2Add(position, Vector2Scale(dirBuffer, TileUnit));
-
-    if (!_gameBoard->IsThereWall(posBuffer))
-    {
-        entity->SetDirection(dirBuffer);
-    }
-}
+public:
+private:
+};

@@ -1,5 +1,5 @@
 /*
- * Created on Tue Oct 17 2023
+ * Created on Thu Oct 19 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -17,51 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "PacMan.hpp"
 #include "AssetManager.hpp"
+#include "Ghost.hpp"
 
-PacMan::PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent)
-    : _frameRate(PacmanMovingFps),
-      _maxFrame(PacmanMovingFps)
+Ghost::Ghost(
+    Color color,
+    Vector2 position,
+    Vector2 direction,
+    DirectionComponent *directionComponent,
+    MovementComponent *movementCoponent)
+    : _frameRate(GhostMovingFps),
+      _maxFrame(GhostMovingFrames)
 {
-    _spritesheet = AssetManager::TPacMan32;
-    _tint = WHITE;
+    _spritesheetBody = AssetManager::TGhostBody32;
+    _spritesheetEyes = AssetManager::TGhostEyes32;
+    _tint = color;
     _frameTicks = 0;
     _frame = 0;
 
-    _position = PacmanStartingPosition;
-    _normDir = Direction::Left();
+    _position = position;
+    _normDir = direction;
     _normDirBuffer = _normDir;
     _directionComponent = directionComponent;
-    _speed = PacmanSpeed;
-    _movementComponent = movementComponent;
+
+    _speed = GhostSpeed;
+    _movementComponent = movementCoponent;
 }
 
-PacMan::~PacMan()
+Ghost::~Ghost()
 {
 }
 
-void PacMan::HandleInput()
+void Ghost::HandleInput()
 {
-    if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A))
-    {
-        _normDirBuffer = Direction::Left();
-    }
-    if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D))
-    {
-        _normDirBuffer = Direction::Right();
-    }
-    if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
-    {
-        _normDirBuffer = Direction::Up();
-    }
-    if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
-    {
-        _normDirBuffer = Direction::Down();
-    }
 }
 
-void PacMan::Update()
+void Ghost::Update()
 {
     _directionComponent->Update(this);
     _movementComponent->Update(this);
@@ -76,67 +67,76 @@ void PacMan::Update()
     }
 }
 
-void PacMan::Draw()
+void Ghost::Draw()
 {
-    float rotation = 0.;
-
-    if (_normDir == Direction::Right())
-    {
-        rotation = 0.;
-    }
-    else if (_normDir == Direction::Down())
-    {
-        rotation = 90.;
-    }
-    else if (_normDir == Direction::Left())
-    {
-        rotation = 180.;
-    }
-    else if (_normDir == Direction::Up())
-    {
-        rotation = 270.;
-    }
-
+    // Draw body.
     DrawTexturePro(
-        _spritesheet,
+        _spritesheetBody,
         {(float)_frame * SpriteUnit, 0, SpriteUnit, SpriteUnit},
         {_position.x, _position.y, SpriteUnit, SpriteUnit},
         {SpriteUnitOffset, SpriteUnitOffset},
-        rotation,
+        0.,
         _tint);
+
+    // Draw eyes.
+    int eyeFrame;
+    if (_normDir == Direction::Right())
+    {
+        eyeFrame = 0;
+    }
+    else if (_normDir == Direction::Up())
+    {
+        eyeFrame = 1;
+    }
+    else if (_normDir == Direction::Left())
+    {
+        eyeFrame = 2;
+    }
+    else if (_normDir == Direction::Down())
+    {
+        eyeFrame = 3;
+    }
+
+    DrawTexturePro(
+        _spritesheetEyes,
+        {(float)eyeFrame * SpriteUnit, 0, SpriteUnit, SpriteUnit},
+        {_position.x, _position.y, SpriteUnit, SpriteUnit},
+        {SpriteUnitOffset, SpriteUnitOffset},
+        0.,
+        WHITE);
 }
 
-Vector2 PacMan::GetPosition() const
+Vector2 Ghost::GetPosition() const
 {
     return _position;
 }
 
-void PacMan::SetPosition(Vector2 position)
+void Ghost::SetPosition(Vector2 position)
 {
     _position = position;
 }
 
-Vector2 PacMan::GetDirection() const
+Vector2 Ghost::GetDirection() const
 {
     return _normDir;
 }
 
-void PacMan::SetDirection(Vector2 direction)
+void Ghost::SetDirection(Vector2 direction)
 {
     _normDir = direction;
 }
 
-Vector2 PacMan::GetDirectionBuffer() const
+Vector2 Ghost::GetDirectionBuffer() const
 {
     return _normDirBuffer;
 }
 
-float PacMan::GetSpeed() const
+float Ghost::GetSpeed() const
 {
     return _speed;
 }
 
-Rectangle PacMan::GetRectangle() const
+Rectangle Ghost::GetRectangle() const
 {
     return {
         _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,

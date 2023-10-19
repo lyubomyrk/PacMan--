@@ -17,14 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "PlayerDirectionComponent.hpp"
 
-#include "Globals.hpp"
-#include "GameBoard.hpp"
-#include "Entity.hpp"
-
-class DirectionComponent
+PlayerDirectionComponent::PlayerDirectionComponent(GameBoard *gameBoard)
 {
-public:
-    virtual void Update(Entity *entity) const = 0;
-};
+    _gameBoard = gameBoard;
+}
+
+void PlayerDirectionComponent::Update(Entity *entity) const
+{
+    Vector2 position = entity->GetPosition();
+    Vector2 dirBuffer = entity->GetDirectionBuffer();
+
+    Vector2 posBuffer = Vector2Add(position, Vector2Scale(dirBuffer, TileUnit));
+
+    if (!_gameBoard->IsThereWall(posBuffer))
+    {
+        entity->SetDirection(dirBuffer);
+    }
+}

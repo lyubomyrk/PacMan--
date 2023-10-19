@@ -37,7 +37,7 @@ void GameBoard::Reset()
     }
 }
 
-bool GameBoard::IsThereWall(Vector2 position)
+bool GameBoard::IsThereWall(Vector2 position) const
 {
     if (
         position.x < 0 ||
@@ -45,12 +45,13 @@ bool GameBoard::IsThereWall(Vector2 position)
         position.y < 0 ||
         position.y > BoardRows * TileUnit)
     {
-
         throw new invalid_argument("position is out of bounds.");
     }
+
     Rectangle rec = {
         position.x - TileUnitOffset, position.y - TileUnitOffset,
         (float)TileUnit, (float)TileUnit};
+
     int boundingTop = rec.y / TileUnit;
     int boundingBottom = boundingTop + (rec.height / TileUnit);
     int boundingLeft = rec.x / TileUnit;

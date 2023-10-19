@@ -29,7 +29,7 @@ public:
     GameBoard();
 
     void Reset();
-    bool IsThereWall(Vector2 position);
+    bool IsThereWall(Vector2 position) const;
 
 private:
 };

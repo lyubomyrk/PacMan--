@@ -53,9 +53,17 @@ bool Game::Init()
     _gameBoard = new GameBoard();
     _gameBoard->Reset();
 
-    _directionComponent = new DirectionComponent(_gameBoard);
-    _movementComponent = new MovementComponent(_gameBoard);
-    _pacman = new PacMan(_directionComponent, _movementComponent);
+    auto playerDirectionComponent = new PlayerDirectionComponent(_gameBoard);
+    auto movementComponent = new MovementComponent(_gameBoard);
+    _pacman = new PacMan(playerDirectionComponent, movementComponent);
+
+    auto blinkyDirectionComponent = new PlayerDirectionComponent(_gameBoard);
+    _blinky = new Ghost(
+        RED,
+        RedGhostStartingPosition,
+        Direction::Left(),
+        blinkyDirectionComponent,
+        movementComponent);
 
     return true;
 }
@@ -67,13 +75,17 @@ bool Game::ShouldExit()
 
 void Game::Update()
 {
+    _blinky->HandleInput();
     _pacman->HandleInput();
+
+    _blinky->Update();
     _pacman->Update();
 
     BeginDrawing();
     ClearBackground(BLACK);
     DrawFPS(2, 2);
     DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
+    _blinky->Draw();
     _pacman->Draw();
     EndDrawing();
 }

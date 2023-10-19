@@ -19,12 +19,16 @@
 
 #pragma once
 
-#include "Globals.hpp"
+#include "DirectionComponent.hpp"
 #include "GameBoard.hpp"
 #include "Entity.hpp"
 
-class DirectionComponent
+class PlayerDirectionComponent : public DirectionComponent
 {
+    GameBoard *_gameBoard;
+
 public:
-    virtual void Update(Entity *entity) const = 0;
+    PlayerDirectionComponent(GameBoard *gameBoard);
+
+    void Update(Entity *entity) const override;
 };
