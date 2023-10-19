@@ -50,15 +50,7 @@ bool Game::Init()
         return false;
     }
 
-    for (int i = 0; i < BoardRows; i++)
-    {
-        _map.push_back(vector<Tile>());
-        for (int j = 0; j < BoardColumns; j++)
-        {
-            _map[i].push_back((Tile)Board[i][j]);
-        }
-    }
-
+    initBoard();
     _movementComponent = new MovementComponent();
     _pacman = new PacMan(_movementComponent);
 
@@ -91,4 +83,16 @@ void Game::Cleanup()
 
     CloseAudioDevice();
     CloseWindow();
+}
+
+void Game::initBoard()
+{
+    for (int i = 0; i < BoardRows; i++)
+    {
+        _gameBoard.push_back(vector<Tile>());
+        for (int j = 0; j < BoardColumns; j++)
+        {
+            _gameBoard[i].push_back((Tile)Board[i][j]);
+        }
+    }
 }

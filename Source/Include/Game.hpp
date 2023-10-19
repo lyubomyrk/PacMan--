@@ -25,7 +25,7 @@
 
 class Game
 {
-    vector<vector<Tile>> _map;
+    vector<vector<Tile>> _gameBoard;
     MovementComponent *_movementComponent;
     PacMan *_pacman;
 
@@ -38,4 +38,5 @@ public:
     void Cleanup();
 
 private:
+    void initBoard();
 };
