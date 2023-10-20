@@ -25,11 +25,16 @@ class GameBoard
 {
     vector<vector<Tile>> _gameBoard;
 
+    int _pellets;
+
+    vector<Rectangle> _debugCollisionRecs;
+
 public:
     GameBoard();
 
     void Reset();
-    bool IsThereWall(Vector2 position) const;
+    bool IsThereWall(Vector2 position);
+    void DrawDebugRecs();
 
 private:
 };

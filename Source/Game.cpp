@@ -117,12 +117,16 @@ void Game::Update()
     _clyde->Update();
     _pacman->Update();
 
-
+    // Check eaten pellets.
 
     BeginDrawing();
     ClearBackground(BLACK);
     DrawFPS(2, 2);
     DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
+    if constexpr (DEBUG)
+    {
+        _gameBoard->DrawDebugRecs();
+    }
     _blinky->Draw();
     _pinky->Draw();
     _inky->Draw();

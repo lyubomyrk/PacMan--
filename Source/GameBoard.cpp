@@ -37,7 +37,7 @@ void GameBoard::Reset()
     }
 }
 
-bool GameBoard::IsThereWall(Vector2 position) const
+bool GameBoard::IsThereWall(Vector2 position)
 {
     Rectangle rec = {
         position.x - TileUnitOffset, position.y - TileUnitOffset,
@@ -57,12 +57,13 @@ bool GameBoard::IsThereWall(Vector2 position) const
     if (boundingRight >= BoardColumns)
         boundingRight = BoardColumns - 1;
 
-    // if constexpr (DEBUG)
-    // {
-    //     DebugCollisionRecs.push_back(
-    //         {(float)boundingLeft * TileUnit, (float)boundingTop * TileUnit,
-    //          (float)(boundingRight - boundingLeft) * TileUnit, (float)(boundingBottom - boundingTop) * TileUnit});
-    // }
+    if constexpr (DEBUG)
+    {
+        Rectangle debugRec = {(float)boundingLeft * TileUnit, (float)boundingTop * TileUnit,
+                              (float)(boundingRight - boundingLeft) * TileUnit, (float)(boundingBottom - boundingTop) * TileUnit};
+
+        _debugCollisionRecs.push_back(debugRec);
+    }
 
     for (int y = boundingTop; y <= boundingBottom; y++)
     {
@@ -82,4 +83,14 @@ bool GameBoard::IsThereWall(Vector2 position) const
     }
 
     return false;
+}
+
+void GameBoard::DrawDebugRecs()
+{
+    for (Rectangle colRec : _debugCollisionRecs)
+    {
+        DrawRectangleLines(colRec.x, colRec.y, colRec.width, colRec.height, GREEN);
+    }
+
+    _debugCollisionRecs.clear();
 }
