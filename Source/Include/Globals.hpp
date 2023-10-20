@@ -29,7 +29,7 @@
 
 using namespace std;
 
-constexpr bool DEBUG = true;
+constexpr bool DEBUG = false;
 
 const int WindowWidth = 672;
 const int WindowHeight = 888;
