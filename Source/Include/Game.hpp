@@ -34,13 +34,18 @@
 class Game
 {
     GameBoard *_gameBoard;
+
+    DirectionComponent *_playerDirectionComponent;
+    DirectionComponent *_blinkyDirectionComponent;
+    DirectionComponent *_pinkyDirectionComponent;
+    DirectionComponent *_inkyDirectionComponent;
+    DirectionComponent *_clydeDirectionComponent;
+    MovementComponent *_movementComponent;
     PacMan *_pacman;
     Ghost *_blinky;
     Ghost *_pinky;
     Ghost *_inky;
     Ghost *_clyde;
-
-
 
 public:
     Game();

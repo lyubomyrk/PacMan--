@@ -26,6 +26,12 @@ using namespace std;
 Game::Game()
 {
     _gameBoard = nullptr;
+    _playerDirectionComponent = nullptr;
+    _blinkyDirectionComponent = nullptr;
+    _pinkyDirectionComponent = nullptr;
+    _inkyDirectionComponent = nullptr;
+    _clydeDirectionComponent = nullptr;
+    _movementComponent = nullptr;
     _pacman = nullptr;
     _blinky = nullptr;
     _pinky = nullptr;
@@ -59,41 +65,42 @@ bool Game::Init()
     _gameBoard = new GameBoard();
     _gameBoard->Reset();
 
-    auto playerDirectionComponent = new PlayerDirectionComponent(_gameBoard);
-    auto movementComponent = new MovementComponent(_gameBoard);
-    _pacman = new PacMan(playerDirectionComponent, movementComponent);
+    _playerDirectionComponent = new PlayerDirectionComponent(_gameBoard);
+    _movementComponent = new MovementComponent(_gameBoard);
 
-    auto blinkyDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
+    _pacman = new PacMan(_playerDirectionComponent, _movementComponent);
+
+    _blinkyDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
     _blinky = new Ghost(
         RED,
         RedGhostStartingPosition,
         Direction::Left(),
-        blinkyDirectionComponent,
-        movementComponent);
+        _blinkyDirectionComponent,
+        _movementComponent);
 
-    auto pinkyDirectionComponent = new PinkyDirectionComponent(_gameBoard, _pacman);
+    _pinkyDirectionComponent = new PinkyDirectionComponent(_gameBoard, _pacman);
     _pinky = new Ghost(
         PINK,
         RedGhostStartingPosition,
         Direction::Right(),
-        pinkyDirectionComponent,
-        movementComponent);
+        _pinkyDirectionComponent,
+        _movementComponent);
 
-    auto inkyDirectionComponent = new InkyDirectionComponent(_gameBoard, _pacman, _blinky);
+    _inkyDirectionComponent = new InkyDirectionComponent(_gameBoard, _pacman, _blinky);
     _inky = new Ghost(
         SKYBLUE,
         RedGhostStartingPosition,
         Direction::Right(),
-        inkyDirectionComponent,
-        movementComponent);
+        _inkyDirectionComponent,
+        _movementComponent);
 
-    auto clydeDirectionComponent = new ClydeDirectionComponent(_gameBoard, _pacman);
+    _clydeDirectionComponent = new ClydeDirectionComponent(_gameBoard, _pacman);
     _clyde = new Ghost(
         ORANGE,
         RedGhostStartingPosition,
         Direction::Left(),
-        clydeDirectionComponent,
-        movementComponent);
+        _clydeDirectionComponent,
+        _movementComponent);
 
     return true;
 }
@@ -147,6 +154,18 @@ void Game::Cleanup()
         delete _blinky;
     if (_pacman)
         delete _pacman;
+    if (_movementComponent)
+        delete _movementComponent;
+    if (_playerDirectionComponent)
+        delete _playerDirectionComponent;
+    if (_blinkyDirectionComponent)
+        delete _blinkyDirectionComponent;
+    if (_pinkyDirectionComponent)
+        delete _pinkyDirectionComponent;
+    if (_inkyDirectionComponent)
+        delete _inkyDirectionComponent;
+    if (_clydeDirectionComponent)
+        delete _clydeDirectionComponent;
     if (_gameBoard)
         delete _gameBoard;
 
