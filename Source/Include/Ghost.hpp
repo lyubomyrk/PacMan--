@@ -65,3 +65,5 @@ public:
 
 private:
 };
+
+Vector2 GhostChooseNextDirection(GameBoard *gameBoard, Vector2 currentPosition, Vector2 currentDir, Vector2 target);

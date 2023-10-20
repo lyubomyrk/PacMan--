@@ -1,5 +1,5 @@
 /*
- * Created on Tue Oct 17 2023
+ * Created on Fri Oct 20 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -17,32 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "Globals.hpp"
-#include "GameBoard.hpp"
-#include "DirectionComponent.hpp"
-#include "PlayerDirectionComponent.hpp"
-#include "BlinkyDirectionComponent.hpp"
 #include "PinkyDirectionComponent.hpp"
-#include "MovementComponent.hpp"
-#include "PacMan.hpp"
 #include "Ghost.hpp"
 
-class Game
+const int PinkyPlayerLead = 4;
+
+PinkyDirectionComponent::PinkyDirectionComponent(GameBoard *gameBoard, Entity *player)
 {
-    GameBoard *_gameBoard;
-    PacMan *_pacman;
-    Ghost *_blinky;
-    Ghost *_pinky;
+    _gameBoard = gameBoard;
+    _player = player;
+}
 
-public:
-    Game();
+void PinkyDirectionComponent::Update(Entity *entity) const
+{
+    Vector2 currPos = entity->GetPosition();
+    Vector2 currDir = entity->GetDirection();
+    Vector2 playerPos = _player->GetPosition();
+    Vector2 playerDir = _player->GetDirection();
 
-    bool Init();
-    bool ShouldExit();
-    void Update();
-    void Cleanup();
+    Vector2 target = Vector2Add(playerPos, Vector2Scale(playerDir, PinkyPlayerLead * TileUnit));
 
-private:
-};
+    Vector2 newDir = GhostChooseNextDirection(_gameBoard, currPos, currDir, target);
+
+    entity->SetDirection(newDir);
+}

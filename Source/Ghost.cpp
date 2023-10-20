@@ -50,11 +50,11 @@ Ghost::~Ghost()
 
 void Ghost::HandleInput()
 {
+    _directionComponent->Update(this);
 }
 
 void Ghost::Update()
 {
-    _directionComponent->Update(this);
     _movementComponent->Update(this);
 
     if (_frameTicks++ >= (TargetFps / _frameRate))
@@ -141,4 +141,54 @@ Rectangle Ghost::GetRectangle() const
     return {
         _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,
         (float)TileUnit, (float)TileUnit};
+}
+
+Vector2 GhostChooseNextDirection(GameBoard *gameBoard, Vector2 currentPosition, Vector2 currentDir, Vector2 target)
+{
+    const Vector2 currTile = {
+        floor(currentPosition.x / TileUnit),
+        floor(currentPosition.y / TileUnit)};
+
+    // For tie brakers, the last item in this list (highest priority) wins.
+    const vector<Vector2> directionPriority = {
+        Direction::Up(), Direction::Right(), Direction::Down(), Direction::Left()};
+    // Skip these special intersections on up direction.
+    const vector<Vector2> specialIntersections = {
+        {12, 14}, {15, 14}, {12, 26}, {15, 26}};
+
+    float shortestDistance = LongestDistance;
+    Vector2 newDir = currentDir;
+
+    for (auto direction : directionPriority)
+    {
+        // Ghosts can't turn back.
+        if (direction == -currentDir)
+        {
+            continue;
+        }
+
+        // Check special intersections.
+        if (direction == Direction::Up())
+        {
+            if (find(
+                    specialIntersections.begin(), specialIntersections.end(), currTile) != specialIntersections.end())
+            {
+                continue;
+            }
+        }
+
+        Vector2 newPos = Vector2Add(currentPosition, Vector2Scale(direction, TileUnit));
+
+        if (!gameBoard->IsThereWall(newPos))
+        {
+            float distance = Vector2Distance(newPos, target);
+            if (distance <= shortestDistance)
+            {
+                newDir = direction;
+                shortestDistance = distance;
+            }
+        }
+    }
+
+    return newDir;
 }

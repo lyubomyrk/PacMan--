@@ -65,6 +65,14 @@ bool Game::Init()
         blinkyDirectionComponent,
         movementComponent);
 
+    auto pinkyDirectionComponent = new PinkyDirectionComponent(_gameBoard, _pacman);
+    _pinky = new Ghost(
+        PINK,
+        RedGhostStartingPosition,
+        Direction::Right(),
+        pinkyDirectionComponent,
+        movementComponent);
+
     return true;
 }
 
@@ -76,9 +84,11 @@ bool Game::ShouldExit()
 void Game::Update()
 {
     _blinky->HandleInput();
+    _pinky->HandleInput();
     _pacman->HandleInput();
 
     _blinky->Update();
+    _pinky->Update();
     _pacman->Update();
 
     BeginDrawing();
@@ -86,6 +96,7 @@ void Game::Update()
     DrawFPS(2, 2);
     DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
     _blinky->Draw();
+    _pinky->Draw();
     _pacman->Draw();
     EndDrawing();
 }

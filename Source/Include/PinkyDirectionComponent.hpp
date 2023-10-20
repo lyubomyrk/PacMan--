@@ -1,5 +1,5 @@
 /*
- * Created on Tue Oct 17 2023
+ * Created on Fri Oct 20 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -19,30 +19,17 @@
 
 #pragma once
 
-#include "Globals.hpp"
-#include "GameBoard.hpp"
 #include "DirectionComponent.hpp"
-#include "PlayerDirectionComponent.hpp"
-#include "BlinkyDirectionComponent.hpp"
-#include "PinkyDirectionComponent.hpp"
-#include "MovementComponent.hpp"
-#include "PacMan.hpp"
-#include "Ghost.hpp"
+#include "GameBoard.hpp"
+#include "Entity.hpp"
 
-class Game
+class PinkyDirectionComponent : public DirectionComponent
 {
     GameBoard *_gameBoard;
-    PacMan *_pacman;
-    Ghost *_blinky;
-    Ghost *_pinky;
+    Entity *_player;
 
 public:
-    Game();
+    PinkyDirectionComponent(GameBoard *gameBoard, Entity *player);
 
-    bool Init();
-    bool ShouldExit();
-    void Update();
-    void Cleanup();
-
-private:
+    void Update(Entity *entity) const override;
 };
