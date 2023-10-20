@@ -1,5 +1,5 @@
 /*
- * Created on Thu Oct 19 2023
+ * Created on Fri Oct 20 2023
  *
  * Copyright (C) 2023 Lyubomyr Kryshtanovskyi
  *
@@ -17,32 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "MovementComponent.hpp"
+#pragma once
 
-MovementComponent::MovementComponent(GameBoard *gameBoard)
+#include "DirectionComponent.hpp"
+#include "GameBoard.hpp"
+#include "Entity.hpp"
+
+class InkyDirectionComponent : public DirectionComponent
 {
-    _gameBoard = gameBoard;
-}
+    GameBoard *_gameBoard;
+    Entity *_player;
+    Entity *_blinky;
 
-void MovementComponent::Update(Entity *entity)
-{
-    Vector2 pos = entity->GetPosition();
-    Vector2 dir = entity->GetDirection();
-    float speed = entity->GetSpeed();
+public:
+    InkyDirectionComponent(GameBoard *gameBoard, Entity *player, Entity *blinky);
 
-    Vector2 newPos = Vector2Add(pos, Vector2Scale(dir, speed));
-
-    if (newPos.x <= 0)
-    {
-        newPos.x = WindowWidth - TileUnitOffset;
-    }
-    if (newPos.x >= WindowWidth)
-    {
-        newPos.x = TileUnitOffset;
-    }
-
-    if (!_gameBoard->IsThereWall(newPos))
-    {
-        entity->SetPosition(newPos);
-    }
-}
+    void Update(Entity *entity) const override;
+};

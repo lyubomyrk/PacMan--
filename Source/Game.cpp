@@ -73,6 +73,14 @@ bool Game::Init()
         pinkyDirectionComponent,
         movementComponent);
 
+    auto inkyDirectionComponent = new InkyDirectionComponent(_gameBoard, _pacman, _blinky);
+    _inky = new Ghost(
+        SKYBLUE,
+        RedGhostStartingPosition,
+        Direction::Right(),
+        inkyDirectionComponent,
+        movementComponent);
+
     return true;
 }
 
@@ -85,10 +93,12 @@ void Game::Update()
 {
     _blinky->HandleInput();
     _pinky->HandleInput();
+    _inky->HandleInput();
     _pacman->HandleInput();
 
     _blinky->Update();
     _pinky->Update();
+    _inky->Update();
     _pacman->Update();
 
     BeginDrawing();
@@ -97,6 +107,7 @@ void Game::Update()
     DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
     _blinky->Draw();
     _pinky->Draw();
+    _inky->Draw();
     _pacman->Draw();
     EndDrawing();
 }

@@ -25,6 +25,7 @@
 #include "PlayerDirectionComponent.hpp"
 #include "BlinkyDirectionComponent.hpp"
 #include "PinkyDirectionComponent.hpp"
+#include "InkyDirectionComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PacMan.hpp"
 #include "Ghost.hpp"
@@ -35,6 +36,7 @@ class Game
     PacMan *_pacman;
     Ghost *_blinky;
     Ghost *_pinky;
+    Ghost *_inky;
 
 public:
     Game();

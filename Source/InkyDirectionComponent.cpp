@@ -17,25 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "PinkyDirectionComponent.hpp"
+#include "InkyDirectionComponent.hpp"
 #include "Ghost.hpp"
 
-const int PlayerLead = 4;
+const int PlayerLead = 2;
+const int VectorScale = 2;
 
-PinkyDirectionComponent::PinkyDirectionComponent(GameBoard *gameBoard, Entity *player)
+InkyDirectionComponent::InkyDirectionComponent(GameBoard *gameBoard, Entity *player, Entity *blinky)
 {
     _gameBoard = gameBoard;
     _player = player;
+    _blinky = blinky;
 }
 
-void PinkyDirectionComponent::Update(Entity *entity) const
+void InkyDirectionComponent::Update(Entity *entity) const
 {
     Vector2 currPos = entity->GetPosition();
     Vector2 currDir = entity->GetDirection();
+
     Vector2 playerPos = _player->GetPosition();
     Vector2 playerDir = _player->GetDirection();
+    Vector2 playerOffset = Vector2Add(playerPos, Vector2Scale(playerDir, PlayerLead * TileUnit));
 
-    Vector2 target = Vector2Add(playerPos, Vector2Scale(playerDir, PlayerLead * TileUnit));
+    Vector2 blinkyPos = _blinky->GetPosition();
+    Vector2 blinkyToOffset = Vector2Subtract(playerOffset, blinkyPos);
+
+    Vector2 blinkyToOffsetNorm = Vector2Normalize(blinkyToOffset);
+    float blinkyToOffsetLength = Vector2Length(blinkyToOffset);
+
+    Vector2 target = Vector2Add(blinkyPos, Vector2Scale(blinkyToOffsetNorm, VectorScale * blinkyToOffsetLength));
 
     Vector2 newDir = GhostChooseNextDirection(_gameBoard, currPos, currDir, target);
 
