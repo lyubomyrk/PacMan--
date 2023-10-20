@@ -85,6 +85,15 @@ bool GameBoard::IsThereWall(Vector2 position)
     return false;
 }
 
+void GameBoard::AddDebugRec(Vector2 position)
+{
+    Rectangle debugColRec = {
+        position.x - TileUnitOffset, position.y - TileUnitOffset,
+        (float)TileUnit, (float)TileUnit};
+
+    _debugCollisionRecs.push_back(debugColRec);
+}
+
 void GameBoard::DrawDebugRecs()
 {
     for (Rectangle colRec : _debugCollisionRecs)

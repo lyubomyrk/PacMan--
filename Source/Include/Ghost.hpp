@@ -42,6 +42,7 @@ class Ghost : public Entity
     float _speed;
     MovementComponent *_movementComponent;
 
+
 public:
     Ghost(
         Color color,

@@ -34,6 +34,7 @@ public:
 
     void Reset();
     bool IsThereWall(Vector2 position);
+    void AddDebugRec(Vector2 position);
     void DrawDebugRecs();
 
 private:

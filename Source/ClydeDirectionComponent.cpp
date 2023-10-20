@@ -48,6 +48,8 @@ void ClydeDirectionComponent::Update(Entity *entity) const
         target = OrangeGhostScatterTargetPosition;
     }
 
+    
+
     Vector2 newDir = GhostChooseNextDirection(_gameBoard, currPos, currDir, target);
 
     entity->SetDirection(newDir);

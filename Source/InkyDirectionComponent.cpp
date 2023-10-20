@@ -47,6 +47,8 @@ void InkyDirectionComponent::Update(Entity *entity) const
 
     Vector2 target = Vector2Add(blinkyPos, Vector2Scale(blinkyToOffsetNorm, VectorScale * blinkyToOffsetLength));
 
+    
+
     Vector2 newDir = GhostChooseNextDirection(_gameBoard, currPos, currDir, target);
 
     entity->SetDirection(newDir);
