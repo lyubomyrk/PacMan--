@@ -25,6 +25,12 @@ using namespace std;
 
 Game::Game()
 {
+    _gameBoard = nullptr;
+    _pacman = nullptr;
+    _blinky = nullptr;
+    _pinky = nullptr;
+    _inky = nullptr;
+    _clyde = nullptr;
 }
 
 bool Game::Init()
@@ -81,6 +87,14 @@ bool Game::Init()
         inkyDirectionComponent,
         movementComponent);
 
+    auto clydeDirectionComponent = new ClydeDirectionComponent(_gameBoard, _pacman);
+    _clyde = new Ghost(
+        ORANGE,
+        RedGhostStartingPosition,
+        Direction::Left(),
+        clydeDirectionComponent,
+        movementComponent);
+
     return true;
 }
 
@@ -94,12 +108,16 @@ void Game::Update()
     _blinky->HandleInput();
     _pinky->HandleInput();
     _inky->HandleInput();
+    _clyde->HandleInput();
     _pacman->HandleInput();
 
     _blinky->Update();
     _pinky->Update();
     _inky->Update();
+    _clyde->Update();
     _pacman->Update();
+
+
 
     BeginDrawing();
     ClearBackground(BLACK);
@@ -108,13 +126,25 @@ void Game::Update()
     _blinky->Draw();
     _pinky->Draw();
     _inky->Draw();
+    _clyde->Draw();
     _pacman->Draw();
     EndDrawing();
 }
 
 void Game::Cleanup()
 {
-    delete _pacman;
+    if (_clyde)
+        delete _clyde;
+    if (_inky)
+        delete _inky;
+    if (_pinky)
+        delete _pinky;
+    if (_blinky)
+        delete _blinky;
+    if (_pacman)
+        delete _pacman;
+    if (_gameBoard)
+        delete _gameBoard;
 
     AssetManager::UnloadAllAssets();
 
