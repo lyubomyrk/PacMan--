@@ -20,9 +20,6 @@
 #include "Globals.hpp"
 #include "Game.hpp"
 
-using std::cout;
-using std::endl;
-
 int main()
 {
     Game *game = new Game();
