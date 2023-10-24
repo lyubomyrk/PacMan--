@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.22)
 
 project("PacMan++" LANGUAGES CXX)
 set(EXECUTABLE "PacMan++")
+add_executable(${EXECUTABLE})
 
+# source files
 file(GLOB SOURCES "Source/*.cpp")
 file(GLOB_RECURSE HEADERS "Source/Include/*.hpp")
-add_executable (${EXECUTABLE} ${SOURCES} ${HEADERS})
+target_sources(${EXECUTABLE} PRIVATE ${SOURCES} ${HEADERS})
 
 # header files
 target_include_directories(${EXECUTABLE} PRIVATE Source/Include)
