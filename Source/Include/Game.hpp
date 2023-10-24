@@ -47,6 +47,9 @@ class Game
     Ghost *_inky;
     Ghost *_clyde;
 
+    bool _playSiren;
+    bool _playWaka;
+
 public:
     Game();
 

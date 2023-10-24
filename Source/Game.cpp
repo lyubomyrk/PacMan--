@@ -37,6 +37,8 @@ Game::Game()
     _pinky = nullptr;
     _inky = nullptr;
     _clyde = nullptr;
+    _playSiren = false;
+    _playWaka = false;
 }
 
 bool Game::Init()
@@ -112,17 +114,27 @@ bool Game::ShouldExit()
 
 void Game::Update()
 {
+    /**
+     * Handle entity input.
+     */
     _blinky->HandleInput();
     _pinky->HandleInput();
     _inky->HandleInput();
     _clyde->HandleInput();
     _pacman->HandleInput();
 
+    /**
+     * Update entities.
+     */
     _blinky->Update();
     _pinky->Update();
     _inky->Update();
     _clyde->Update();
     _pacman->Update();
+
+    /**
+     * Handle game conditions.
+     */
 
     // Check eaten pellets.
     Vector2 pacmanPos = _pacman->GetPosition();
@@ -130,6 +142,22 @@ void Game::Update()
     if (_gameBoard->IsThere(pacmanPos, Tile::Pellet))
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
+    }
+    if (_pacman->IsAlive())
+    {
+        _playSiren = true;
+    }
+    else
+    {
+        _playSiren = false;
+    }
+
+    /**
+     * Play audio.
+     */
+    if (_playSiren && !IsSoundPlaying(AssetManager::SSiren))
+    {
+        PlaySound(AssetManager::SSiren);
     }
 
     BeginDrawing();

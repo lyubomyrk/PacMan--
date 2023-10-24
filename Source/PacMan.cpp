@@ -35,6 +35,8 @@ PacMan::PacMan(DirectionComponent *directionComponent, MovementComponent *moveme
     _directionComponent = directionComponent;
     _speed = PacmanSpeed;
     _movementComponent = movementComponent;
+
+    _alive = true;
 }
 
 PacMan::~PacMan()
@@ -141,4 +143,9 @@ Rectangle PacMan::GetRectangle() const
     return {
         _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,
         (float)TileUnit, (float)TileUnit};
+}
+
+bool PacMan::IsAlive() const
+{
+    return _alive;
 }

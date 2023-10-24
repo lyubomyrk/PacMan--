@@ -41,6 +41,8 @@ class PacMan : public Entity
     float _speed;
     MovementComponent *_movementComponent;
 
+    bool _alive;
+
 public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
@@ -56,6 +58,8 @@ public:
     Vector2 GetDirectionBuffer() const override;
     float GetSpeed() const override;
     Rectangle GetRectangle() const override;
+
+    bool IsAlive() const;
 
 private:
 };
