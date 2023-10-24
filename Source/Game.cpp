@@ -125,15 +125,17 @@ void Game::Update()
     _pacman->Update();
 
     // Check eaten pellets.
+    Vector2 pacmanPos = _pacman->GetPosition();
+
+    if (_gameBoard->IsThere(pacmanPos, Tile::Pellet))
+    {
+        _gameBoard->Remove(pacmanPos, Tile::Pellet);
+    }
 
     BeginDrawing();
     ClearBackground(BLACK);
     DrawFPS(2, 2);
-    DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
-    if constexpr (DEBUG)
-    {
-        _gameBoard->DrawDebugRecs();
-    }
+    _gameBoard->Draw();
     _blinky->Draw();
     _pinky->Draw();
     _inky->Draw();

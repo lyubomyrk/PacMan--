@@ -43,7 +43,10 @@ enum class Tile
     Wall = '#',
     Pellet = '*',
     Energizer = '^',
-    Door = '='
+    Door = '=',
+    Fruit = 'F',
+    Bell = 'B',
+    Key = 'K',
 };
 
 const int TileUnit = 24;

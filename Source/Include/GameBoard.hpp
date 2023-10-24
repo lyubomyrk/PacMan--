@@ -31,9 +31,13 @@ class GameBoard
 
 public:
     GameBoard();
+    ~GameBoard();
+    void Draw();
 
     void Reset();
     bool IsThereWall(Vector2 position);
+    bool IsThere(Vector2 position, Tile tile);
+    void Remove(Vector2 position, Tile type);
     void AddDebugRec(Vector2 position);
     void DrawDebugRecs();
 

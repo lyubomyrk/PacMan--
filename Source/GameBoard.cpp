@@ -17,27 +17,62 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include "GameBoard.hpp"
+#include "AssetManager.hpp"
 
 GameBoard::GameBoard()
 {
+}
+
+GameBoard::~GameBoard()
+{
+}
+
+void GameBoard::Draw()
+{
+    // Draw maze.
+    DrawTexture(AssetManager::TBoard24, 0, 0, BLUE);
+
+    // Draw pellets and energizer.
+    for (int i = 0; i < BoardRows; i++)
+    {
+        for (int j = 0; j < BoardColumns; j++)
+        {
+            if (_gameBoard[i][j] == Tile::Pellet)
+            {
+                DrawTexture(AssetManager::TPellet24, j * TileUnit, i * TileUnit, WHITE);
+            }
+        }
+    }
+
+    if constexpr (DEBUG)
+    {
+        DrawDebugRecs();
+    }
 }
 
 void GameBoard::Reset()
 {
     _gameBoard.clear();
 
-    for (int i = 0; i < BoardRows; i++)
+    for (int m = 0; m < BoardRows; m++)
     {
+        vector<Tile> row;
 
-        _gameBoard.push_back(vector<Tile>());
-        for (int j = 0; j < BoardColumns; j++)
+        for (int n = 0; n < BoardColumns; n++)
         {
-            _gameBoard[i].push_back((Tile)Board[i][j]);
+            row.push_back((Tile)Board[m][n]);
         }
+
+        _gameBoard.push_back(row);
     }
 }
 
 bool GameBoard::IsThereWall(Vector2 position)
+{
+    return IsThere(position, Tile::Wall) || IsThere(position, Tile::Door);
+}
+
+bool GameBoard::IsThere(Vector2 position, Tile tile)
 {
     Rectangle rec = {
         position.x - TileUnitOffset, position.y - TileUnitOffset,
@@ -69,7 +104,7 @@ bool GameBoard::IsThereWall(Vector2 position)
     {
         for (int x = boundingLeft; x <= boundingRight; x++)
         {
-            if (_gameBoard[y][x] == Tile::Wall || _gameBoard[y][x] == Tile::Door)
+            if (_gameBoard[y][x] == tile)
             {
                 Rectangle wallRec = {
                     (float)x * TileUnit, (float)y * TileUnit,
@@ -83,6 +118,25 @@ bool GameBoard::IsThereWall(Vector2 position)
     }
 
     return false;
+}
+
+void GameBoard::Remove(Vector2 position, Tile type)
+{
+    Vector2 tile = {
+        floor(position.x / TileUnit), floor(position.y / TileUnit)};
+
+    if (_gameBoard[(int)tile.y][(int)tile.x] == type)
+    {
+        switch (type)
+        {
+        case Tile::Pellet:
+            _pellets--;
+            break;
+        default:
+            break;
+        }
+        _gameBoard[(int)tile.y][(int)tile.x] = Tile::Empty;
+    }
 }
 
 void GameBoard::AddDebugRec(Vector2 position)
