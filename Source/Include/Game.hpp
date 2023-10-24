@@ -47,6 +47,8 @@ class Game
     Ghost *_inky;
     Ghost *_clyde;
 
+    Vector2 _prevPacmanPos;
+    Vector2 _prevPacmanDir;
     bool _playSiren;
     bool _playWaka;
 

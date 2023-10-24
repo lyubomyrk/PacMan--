@@ -37,6 +37,8 @@ Game::Game()
     _pinky = nullptr;
     _inky = nullptr;
     _clyde = nullptr;
+    _prevPacmanPos = {0};
+    _prevPacmanDir = {0};
     _playSiren = false;
     _playWaka = false;
 }
@@ -136,13 +138,41 @@ void Game::Update()
      * Handle game conditions.
      */
 
-    // Check eaten pellets.
     Vector2 pacmanPos = _pacman->GetPosition();
+    Vector2 pacmanTile = {
+        floor(pacmanPos.x / TileUnit), floor(pacmanPos.y / TileUnit)};
+    Vector2 pacmanDir = _pacman->GetDirection();
 
+    Vector2 prevPacmanTile = {
+        floor(_prevPacmanPos.x / TileUnit), floor(_prevPacmanPos.y / TileUnit)};
+
+    if (pacmanTile != prevPacmanTile)
+    {
+        if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
+        {
+            _playWaka = false;
+        }
+    }
+    if (pacmanDir != _prevPacmanDir)
+    {
+        if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
+        {
+            _playWaka = false;
+        }
+    }
+    // Hit a wall.
+    if (pacmanPos == _prevPacmanPos)
+    {
+        _playWaka = false;
+    }
+
+    // Check if eaten pellet.
     if (_gameBoard->IsThere(pacmanPos, Tile::Pellet))
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
+        _playWaka = true;
     }
+
     if (_pacman->IsAlive())
     {
         _playSiren = true;
@@ -150,6 +180,7 @@ void Game::Update()
     else
     {
         _playSiren = false;
+        _playWaka = false;
     }
 
     /**
@@ -159,6 +190,22 @@ void Game::Update()
     {
         PlaySound(AssetManager::SSiren);
     }
+    else if (!_playSiren && IsSoundPlaying(AssetManager::SSiren))
+    {
+        PlaySound(AssetManager::SSiren);
+    }
+
+    if (_playWaka && !IsSoundPlaying(AssetManager::SWaka))
+    {
+        PlaySound(AssetManager::SWaka);
+    }
+    else if (!_playWaka && IsSoundPlaying(AssetManager::SWaka))
+    {
+        StopSound(AssetManager::SWaka);
+    }
+
+    _prevPacmanPos = pacmanPos;
+    _prevPacmanDir = pacmanDir;
 
     BeginDrawing();
     ClearBackground(BLACK);
