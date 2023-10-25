@@ -32,6 +32,7 @@ Game::Game()
     _inkyDirectionComponent = nullptr;
     _clydeDirectionComponent = nullptr;
     _movementComponent = nullptr;
+    _ghosts.clear();
     _pacman = nullptr;
     _blinky = nullptr;
     _pinky = nullptr;
@@ -106,6 +107,11 @@ bool Game::Init()
         _clydeDirectionComponent,
         _movementComponent);
 
+    _ghosts.push_back(_blinky);
+    _ghosts.push_back(_pinky);
+    _ghosts.push_back(_inky);
+    _ghosts.push_back(_clyde);
+
     return true;
 }
 
@@ -119,19 +125,19 @@ void Game::Update()
     /**
      * Handle entity input.
      */
-    _blinky->HandleInput();
-    _pinky->HandleInput();
-    _inky->HandleInput();
-    _clyde->HandleInput();
+    for (Ghost *ghost : _ghosts)
+    {
+        ghost->HandleInput();
+    }
     _pacman->HandleInput();
 
     /**
      * Update entities.
      */
-    _blinky->Update();
-    _pinky->Update();
-    _inky->Update();
-    _clyde->Update();
+    for (Ghost *ghost : _ghosts)
+    {
+        ghost->Update();
+    }
     _pacman->Update();
 
     /**
@@ -209,14 +215,17 @@ void Game::Update()
     _prevPacmanPos = pacmanPos;
     _prevPacmanDir = pacmanDir;
 
+    /**
+     * Draw.
+     */
     BeginDrawing();
     ClearBackground(BLACK);
     DrawFPS(2, 2);
     _gameBoard->Draw();
-    _blinky->Draw();
-    _pinky->Draw();
-    _inky->Draw();
-    _clyde->Draw();
+    for (Ghost *ghost : _ghosts)
+    {
+        ghost->Draw();
+    }
     _pacman->Draw();
     EndDrawing();
 }

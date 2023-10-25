@@ -42,6 +42,7 @@ class Game
     DirectionComponent *_clydeDirectionComponent;
     MovementComponent *_movementComponent;
     PacMan *_pacman;
+    vector<Ghost *> _ghosts;
     Ghost *_blinky;
     Ghost *_pinky;
     Ghost *_inky;
