@@ -152,6 +152,23 @@ void Game::Update()
     Vector2 prevPacmanTile = {
         floor(_prevPacmanPos.x / TileUnit), floor(_prevPacmanPos.y / TileUnit)};
 
+    for (Ghost *ghost : _ghosts)
+    {
+        Vector2 ghostPos = ghost->GetPosition();
+        Vector2 ghostTile = {
+            floor(ghostPos.x / TileUnit), floor(ghostPos.y / TileUnit)};
+
+        if (pacmanTile == ghostTile)
+        {
+            _pacman->Kill();
+            for (Ghost *ghost : _ghosts)
+            {
+                ghost->SetSpeed(0.);
+            }
+            break;
+        }
+    }
+
     // Pacman on new tile.
     if (pacmanTile != prevPacmanTile)
     {

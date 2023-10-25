@@ -29,5 +29,6 @@ public:
     virtual void SetDirection(Vector2 direction) = 0;
     virtual Vector2 GetDirectionBuffer() const = 0;
     virtual float GetSpeed() const = 0;
+    virtual void SetSpeed(float speed) = 0;
     virtual Rectangle GetRectangle() const = 0;
 };

@@ -62,6 +62,7 @@ public:
     void SetDirection(Vector2 direction) override;
     Vector2 GetDirectionBuffer() const override;
     float GetSpeed() const override;
+    void SetSpeed(float speed) override;
     Rectangle GetRectangle() const override;
 
 private:

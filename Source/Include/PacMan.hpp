@@ -48,6 +48,7 @@ public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
 
+    void Reset();
     void HandleInput();
     void Update();
     void Draw();
@@ -58,8 +59,10 @@ public:
     void SetDirection(Vector2 direction) override;
     Vector2 GetDirectionBuffer() const override;
     float GetSpeed() const override;
+    void SetSpeed(float speed) override;
     Rectangle GetRectangle() const override;
 
+    void Kill();
     bool IsAlive() const;
 
 private:

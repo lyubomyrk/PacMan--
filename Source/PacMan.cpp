@@ -43,6 +43,19 @@ PacMan::~PacMan()
 {
 }
 
+void PacMan::Reset()
+{
+    _tint = WHITE;
+    _frameTicks = 0;
+    _frame = 0;
+
+    _position = PacmanStartingPosition;
+    _normDir = Direction::Left();
+    _normDirBuffer = _normDir;
+
+    _alive = true;
+}
+
 void PacMan::HandleInput()
 {
     if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A))
@@ -138,11 +151,24 @@ float PacMan::GetSpeed() const
     return _speed;
 }
 
+void PacMan::SetSpeed(float speed)
+{
+    _speed = speed;
+}
+
 Rectangle PacMan::GetRectangle() const
 {
     return {
         _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,
         (float)TileUnit, (float)TileUnit};
+}
+
+void PacMan::Kill()
+{
+    if (_alive)
+    {
+        _alive = false;
+    }
 }
 
 bool PacMan::IsAlive() const

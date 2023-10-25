@@ -136,6 +136,11 @@ float Ghost::GetSpeed() const
     return _speed;
 }
 
+void Ghost::SetSpeed(float speed)
+{
+    _speed = speed;
+}
+
 Rectangle Ghost::GetRectangle() const
 {
     return {
