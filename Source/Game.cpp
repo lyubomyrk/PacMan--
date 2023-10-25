@@ -146,6 +146,7 @@ void Game::Update()
     Vector2 prevPacmanTile = {
         floor(_prevPacmanPos.x / TileUnit), floor(_prevPacmanPos.y / TileUnit)};
 
+    // Pacman on new tile.
     if (pacmanTile != prevPacmanTile)
     {
         if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
@@ -153,6 +154,7 @@ void Game::Update()
             _playWaka = false;
         }
     }
+    // Pacman changes direction.
     if (pacmanDir != _prevPacmanDir)
     {
         if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
@@ -160,7 +162,7 @@ void Game::Update()
             _playWaka = false;
         }
     }
-    // Hit a wall.
+    // Pacman hit a wall.
     if (pacmanPos == _prevPacmanPos)
     {
         _playWaka = false;

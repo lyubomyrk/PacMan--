@@ -24,7 +24,7 @@ MovementComponent::MovementComponent(GameBoard *gameBoard)
     _gameBoard = gameBoard;
 }
 
-void MovementComponent::Update(Entity *entity)
+void MovementComponent::Update(MovingEntity *entity)
 {
     Vector2 pos = entity->GetPosition();
     Vector2 dir = entity->GetDirection();

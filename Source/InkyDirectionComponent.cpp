@@ -23,14 +23,14 @@
 const int PlayerLead = 2;
 const int VectorScale = 2;
 
-InkyDirectionComponent::InkyDirectionComponent(GameBoard *gameBoard, Entity *player, Entity *blinky)
+InkyDirectionComponent::InkyDirectionComponent(GameBoard *gameBoard, MovingEntity *player, MovingEntity *blinky)
 {
     _gameBoard = gameBoard;
     _player = player;
     _blinky = blinky;
 }
 
-void InkyDirectionComponent::Update(Entity *entity) const
+void InkyDirectionComponent::Update(MovingEntity *entity) const
 {
     Vector2 currPos = entity->GetPosition();
     Vector2 currDir = entity->GetDirection();

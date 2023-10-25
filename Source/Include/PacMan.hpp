@@ -21,10 +21,11 @@
 
 #include "Globals.hpp"
 #include "Entity.hpp"
+#include "MovingEntity.hpp"
 #include "MovementComponent.hpp"
 #include "DirectionComponent.hpp"
 
-class PacMan : public Entity
+class PacMan : public MovingEntity
 {
     Texture2D _spritesheet;
     Color _tint;

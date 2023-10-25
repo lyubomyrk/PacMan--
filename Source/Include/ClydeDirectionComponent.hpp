@@ -26,10 +26,10 @@
 class ClydeDirectionComponent : public DirectionComponent
 {
     GameBoard *_gameBoard;
-    Entity *_player;
+    MovingEntity *_player;
 
 public:
-    ClydeDirectionComponent(GameBoard *gameBoard, Entity *player);
+    ClydeDirectionComponent(GameBoard *gameBoard, MovingEntity *player);
 
-    void Update(Entity *entity) const override;
+    void Update(MovingEntity *entity) const override;
 };

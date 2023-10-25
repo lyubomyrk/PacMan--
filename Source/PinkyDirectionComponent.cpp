@@ -22,13 +22,13 @@
 
 const int PlayerLead = 4;
 
-PinkyDirectionComponent::PinkyDirectionComponent(GameBoard *gameBoard, Entity *player)
+PinkyDirectionComponent::PinkyDirectionComponent(GameBoard *gameBoard, MovingEntity *player)
 {
     _gameBoard = gameBoard;
     _player = player;
 }
 
-void PinkyDirectionComponent::Update(Entity *entity) const
+void PinkyDirectionComponent::Update(MovingEntity *entity) const
 {
     Vector2 currPos = entity->GetPosition();
     Vector2 currDir = entity->GetDirection();

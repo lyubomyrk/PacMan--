@@ -20,13 +20,13 @@
 #include "BlinkyDirectionComponent.hpp"
 #include "Ghost.hpp"
 
-BlinkyDirectionComponent::BlinkyDirectionComponent(GameBoard *gameBoard, Entity *player)
+BlinkyDirectionComponent::BlinkyDirectionComponent(GameBoard *gameBoard, MovingEntity *player)
 {
     _gameBoard = gameBoard;
     _player = player;
 }
 
-void BlinkyDirectionComponent::Update(Entity *entity) const
+void BlinkyDirectionComponent::Update(MovingEntity *entity) const
 {
     const Vector2 currPos = entity->GetPosition();
     const Vector2 currDir = entity->GetDirection();

@@ -22,9 +22,10 @@
 #include "Globals.hpp"
 #include "GameBoard.hpp"
 #include "Entity.hpp"
+#include "MovingEntity.hpp"
 
 class DirectionComponent
 {
 public:
-    virtual void Update(Entity *entity) const = 0;
+    virtual void Update(MovingEntity *entity) const = 0;
 };

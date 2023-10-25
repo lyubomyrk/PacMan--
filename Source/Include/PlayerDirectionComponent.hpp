@@ -30,5 +30,5 @@ class PlayerDirectionComponent : public DirectionComponent
 public:
     PlayerDirectionComponent(GameBoard *gameBoard);
 
-    void Update(Entity *entity) const override;
+    void Update(MovingEntity *entity) const override;
 };

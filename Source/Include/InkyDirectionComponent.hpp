@@ -26,11 +26,11 @@
 class InkyDirectionComponent : public DirectionComponent
 {
     GameBoard *_gameBoard;
-    Entity *_player;
-    Entity *_blinky;
+    MovingEntity *_player;
+    MovingEntity *_blinky;
 
 public:
-    InkyDirectionComponent(GameBoard *gameBoard, Entity *player, Entity *blinky);
+    InkyDirectionComponent(GameBoard *gameBoard, MovingEntity *player, MovingEntity *blinky);
 
-    void Update(Entity *entity) const override;
+    void Update(MovingEntity *entity) const override;
 };

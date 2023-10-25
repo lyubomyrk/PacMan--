@@ -18,7 +18,6 @@
  */
 
 #pragma once
-
 #include "DirectionComponent.hpp"
 #include "GameBoard.hpp"
 #include "PacMan.hpp"
@@ -26,10 +25,10 @@
 class BlinkyDirectionComponent : public DirectionComponent
 {
     GameBoard *_gameBoard;
-    Entity *_player;
+    MovingEntity *_player;
 
 public:
-    BlinkyDirectionComponent(GameBoard *gameBoard, Entity *player);
+    BlinkyDirectionComponent(GameBoard *gameBoard, MovingEntity *player);
 
-    void Update(Entity *entity) const override;
+    void Update(MovingEntity *entity) const override;
 };

@@ -21,10 +21,11 @@
 
 #include "Globals.hpp"
 #include "Entity.hpp"
+#include "MovingEntity.hpp"
 #include "DirectionComponent.hpp"
 #include "MovementComponent.hpp"
 
-class Ghost : public Entity
+class Ghost : public MovingEntity
 {
     Texture2D _spritesheetBody;
     Texture2D _spritesheetEyes;

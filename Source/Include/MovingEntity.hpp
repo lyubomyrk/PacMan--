@@ -21,8 +21,13 @@
 #include "Globals.hpp"
 #include "Entity.hpp"
 
-class MovingEntity
+class MovingEntity : public Entity
 {
 public:
-private:
+    virtual ~MovingEntity() {}
+    virtual Vector2 GetDirection() const = 0;
+    virtual void SetDirection(Vector2 direction) = 0;
+    virtual Vector2 GetDirectionBuffer() const = 0;
+    virtual float GetSpeed() const = 0;
+    virtual Rectangle GetRectangle() const = 0;
 };

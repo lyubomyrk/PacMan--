@@ -24,7 +24,7 @@ PlayerDirectionComponent::PlayerDirectionComponent(GameBoard *gameBoard)
     _gameBoard = gameBoard;
 }
 
-void PlayerDirectionComponent::Update(Entity *entity) const
+void PlayerDirectionComponent::Update(MovingEntity *entity) const
 {
     Vector2 position = entity->GetPosition();
     Vector2 dirBuffer = entity->GetDirectionBuffer();

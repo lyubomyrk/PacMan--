@@ -22,6 +22,7 @@
 #include "Globals.hpp"
 #include "GameBoard.hpp"
 #include "Entity.hpp"
+#include "MovingEntity.hpp"
 
 class MovementComponent
 {
@@ -30,7 +31,7 @@ class MovementComponent
 public:
     MovementComponent(GameBoard *gameBoard);
 
-    void Update(Entity *entity);
+    void Update(MovingEntity *entity);
 
 private:
 };

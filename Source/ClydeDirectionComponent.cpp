@@ -22,13 +22,13 @@
 
 const int FearRadius = 8 * TileUnit;
 
-ClydeDirectionComponent::ClydeDirectionComponent(GameBoard *gameBoard, Entity *player)
+ClydeDirectionComponent::ClydeDirectionComponent(GameBoard *gameBoard, MovingEntity *player)
 {
     _gameBoard = gameBoard;
     _player = player;
 }
 
-void ClydeDirectionComponent::Update(Entity *entity) const
+void ClydeDirectionComponent::Update(MovingEntity *entity) const
 {
     Vector2 currPos = entity->GetPosition();
     Vector2 currDir = entity->GetDirection();
