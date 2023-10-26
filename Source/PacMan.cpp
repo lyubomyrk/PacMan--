@@ -81,6 +81,17 @@ void PacMan::Update()
     _directionComponent->Update(this);
     _movementComponent->Update(this);
 
+    _wakaTimer.Update();
+
+    if (!_wakaTimer.IsFinished())
+    {
+        PlaySoundIfNotPlaying(AssetManager::SWaka);
+    }
+    else
+    {
+        StopSound(AssetManager::SWaka);
+    }
+
     if (_frameTicks++ >= (TargetFps / _frameRate))
     {
         _frameTicks = 0;
@@ -174,4 +185,9 @@ void PacMan::Kill()
 bool PacMan::IsAlive() const
 {
     return _alive;
+}
+
+void PacMan::AtePellet()
+{
+    _wakaTimer.Start(_wakaPlaytime);
 }

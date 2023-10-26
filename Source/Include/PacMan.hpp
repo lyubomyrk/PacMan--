@@ -24,6 +24,7 @@
 #include "MovingEntity.hpp"
 #include "MovementComponent.hpp"
 #include "DirectionComponent.hpp"
+#include "Timer.hpp"
 
 class PacMan : public MovingEntity
 {
@@ -43,6 +44,9 @@ class PacMan : public MovingEntity
     MovementComponent *_movementComponent;
 
     bool _alive;
+
+    Timer _wakaTimer;
+    const float _wakaPlaytime = (1. / TargetFps) * (1. / PacmanSpeed) * (TileUnit);
 
 public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
@@ -64,6 +68,8 @@ public:
 
     void Kill();
     bool IsAlive() const;
+
+    void AtePellet();
 
 private:
 };

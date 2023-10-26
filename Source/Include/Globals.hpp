@@ -151,3 +151,11 @@ inline Vector2 operator-(Vector2 right)
 {
     return {-right.x, -right.y};
 }
+
+inline void PlaySoundIfNotPlaying(Sound sound)
+{
+    if (!IsSoundPlaying(sound))
+    {
+        PlaySound(sound);
+    }
+}

@@ -143,7 +143,6 @@ void Game::Update()
     /**
      * Handle game conditions.
      */
-
     Vector2 pacmanPos = _pacman->GetPosition();
     Vector2 pacmanTile = {
         floor(pacmanPos.x / TileUnit), floor(pacmanPos.y / TileUnit)};
@@ -195,6 +194,7 @@ void Game::Update()
     if (_gameBoard->IsThere(pacmanPos, Tile::Pellet))
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
+        _pacman->AtePellet();
         _playWaka = true;
     }
 
@@ -220,14 +220,14 @@ void Game::Update()
         PlaySound(AssetManager::SSiren);
     }
 
-    if (_playWaka && !IsSoundPlaying(AssetManager::SWaka))
-    {
-        PlaySound(AssetManager::SWaka);
-    }
-    else if (!_playWaka && IsSoundPlaying(AssetManager::SWaka))
-    {
-        StopSound(AssetManager::SWaka);
-    }
+    // if (_playWaka && !IsSoundPlaying(AssetManager::SWaka))
+    // {
+    //     PlaySound(AssetManager::SWaka);
+    // }
+    // else if (!_playWaka && IsSoundPlaying(AssetManager::SWaka))
+    // {
+    //     StopSound(AssetManager::SWaka);
+    // }
 
     _prevPacmanPos = pacmanPos;
     _prevPacmanDir = pacmanDir;
