@@ -160,7 +160,7 @@ inline void PlaySoundIfNotPlaying(Sound sound)
     }
 }
 
-inline void PlaySoundOnConditional(Sound sound, bool condition)
+inline void PlaySoundIfTrue(Sound sound, bool condition)
 {
     if (condition)
     {

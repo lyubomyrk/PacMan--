@@ -83,7 +83,7 @@ void PacMan::Update()
 
     _wakaTimer.Update();
 
-    PlaySoundOnConditional(AssetManager::SWaka, !_wakaTimer.IsFinished());
+    PlaySoundIfTrue(AssetManager::SWaka, !_wakaTimer.IsFinished());
 
     if (_frameTicks++ >= (TargetFps / _frameRate))
     {
