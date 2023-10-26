@@ -159,3 +159,15 @@ inline void PlaySoundIfNotPlaying(Sound sound)
         PlaySound(sound);
     }
 }
+
+inline void PlaySoundOnConditional(Sound sound, bool condition)
+{
+    if (condition)
+    {
+        PlaySoundIfNotPlaying(sound);
+    }
+    else
+    {
+        StopSound(sound);
+    }
+}
