@@ -168,7 +168,7 @@ void Game::Update()
 
         if (pacmanTile == ghostTile)
         {
-            resetForNextLife();
+            nextLife();
             break;
         }
     }
@@ -242,10 +242,10 @@ void Game::Cleanup()
 void Game::nextLevel()
 {
     _gameBoard->Reset();
-    resetForNextLife();
+    nextLife();
 }
 
-void Game::resetForNextLife()
+void Game::nextLife()
 {
     _pacman->Reset();
     for (Ghost *ghost : _ghosts)

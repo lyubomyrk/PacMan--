@@ -50,6 +50,7 @@ class Game
     Ghost *_clyde;
 
     Timer _introTimer;
+
     bool _started;
 
 public:
@@ -62,5 +63,5 @@ public:
 
 private:
     void nextLevel();
-    void resetForNextLife();
+    void nextLife();
 };
