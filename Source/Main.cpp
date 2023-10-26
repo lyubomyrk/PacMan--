@@ -29,6 +29,7 @@ int main()
         while (!game->ShouldExit())
         {
             game->Update();
+            game->Draw();
         }
     }
 

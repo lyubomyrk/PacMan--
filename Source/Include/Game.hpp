@@ -51,14 +51,29 @@ class Game
 
     Timer _introTimer;
 
-    bool _started;
+    bool _active;
 
 public:
     Game();
 
+    /**
+     * Initialize graphics and audio, load assets, and setup
+     * game state for first level and play.
+     *
+     * @return true if game initialized successfully, false otherwise
+     */
     bool Init();
+    /**
+     * Return if game should exit.
+     *
+     * @return true if game should exit, false otherwise
+     */
     bool ShouldExit();
+    /**
+     * Update and draw one frame.
+     */
     void Update();
+    void Draw();
     void Cleanup();
 
 private:

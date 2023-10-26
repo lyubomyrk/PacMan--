@@ -39,7 +39,7 @@ Game::Game()
     _inky = nullptr;
     _clyde = nullptr;
 
-    _started = false;
+    _active = false;
 }
 
 bool Game::Init()
@@ -152,7 +152,7 @@ void Game::Update()
             ghost->Start();
         }
 
-        _started = true;
+        _active = true;
     }
 
     Vector2 pacmanPos = _pacman->GetPosition();
@@ -188,9 +188,12 @@ void Game::Update()
     /**
      * Play audio.
      */
-    PlaySoundIfTrue(AssetManager::SGameIntro, !_started);
-    PlaySoundIfTrue(AssetManager::SSiren, _started);
+    PlaySoundIfTrue(AssetManager::SGameIntro, !_active);
+    PlaySoundIfTrue(AssetManager::SSiren, _active);
+}
 
+void Game::Draw()
+{
     /**
      * Draw.
      */
@@ -254,5 +257,5 @@ void Game::nextLife()
     }
 
     _introTimer.Start(IntroTime);
-    _started = false;
+    _active = false;
 }
