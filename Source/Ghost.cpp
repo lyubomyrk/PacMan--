@@ -22,11 +22,13 @@
 
 Ghost::Ghost(
     Color color,
-    Vector2 position,
-    Vector2 direction,
+    Vector2 startingPosition,
+    Vector2 startingDirection,
     DirectionComponent *directionComponent,
     MovementComponent *movementCoponent)
-    : _frameRate(GhostMovingFps),
+    : _startingPosition(startingPosition),
+      _startingNormDir(startingDirection),
+      _frameRate(GhostMovingFps),
       _maxFrame(GhostMovingFrames)
 {
     _spritesheetBody = AssetManager::TGhostBody32;
@@ -35,8 +37,8 @@ Ghost::Ghost(
     _frameTicks = 0;
     _frame = 0;
 
-    _position = position;
-    _normDir = direction;
+    _position = _startingPosition;
+    _normDir = _startingNormDir;
     _normDirBuffer = _normDir;
     _directionComponent = directionComponent;
 
@@ -104,6 +106,27 @@ void Ghost::Draw()
         {SpriteUnitOffset, SpriteUnitOffset},
         0.,
         WHITE);
+}
+
+void Ghost::Reset()
+{
+    _position = _startingPosition;
+    _normDir = _startingNormDir;
+    _normDirBuffer = _normDir;
+    _speed = _regularSpeed;
+}
+
+void Ghost::Scatter()
+{
+}
+
+void Ghost::Frighten()
+{
+}
+
+void Ghost::Stop()
+{
+    _speed = 0.;
 }
 
 Vector2 Ghost::GetPosition() const

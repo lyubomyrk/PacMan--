@@ -152,10 +152,10 @@ void Game::Update()
 
         if (pacmanTile == ghostTile)
         {
-            _pacman->Kill();
+            _pacman->Reset();
             for (Ghost *ghost : _ghosts)
             {
-                ghost->SetSpeed(0.);
+                ghost->Reset();
             }
             break;
         }

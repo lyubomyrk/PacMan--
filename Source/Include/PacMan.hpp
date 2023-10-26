@@ -52,10 +52,14 @@ public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
 
-    void Reset();
     void HandleInput();
     void Update();
     void Draw();
+
+    void Kill();
+    bool IsAlive() const;
+    void AtePellet();
+    void Reset();
 
     Vector2 GetPosition() const override;
     void SetPosition(Vector2 position) override;
@@ -65,11 +69,6 @@ public:
     float GetSpeed() const override;
     void SetSpeed(float speed) override;
     Rectangle GetRectangle() const override;
-
-    void Kill();
-    bool IsAlive() const;
-
-    void AtePellet();
 
 private:
 };

@@ -125,6 +125,24 @@ void PacMan::Draw()
         _tint);
 }
 
+void PacMan::Kill()
+{
+    if (_alive)
+    {
+        _alive = false;
+    }
+}
+
+bool PacMan::IsAlive() const
+{
+    return _alive;
+}
+
+void PacMan::AtePellet()
+{
+    _wakaTimer.Start(_wakaPlaytime);
+}
+
 Vector2 PacMan::GetPosition() const
 {
     return _position;
@@ -165,22 +183,4 @@ Rectangle PacMan::GetRectangle() const
     return {
         _position.x * TileUnit - TileUnitOffset, _position.y * TileUnit - TileUnitOffset,
         (float)TileUnit, (float)TileUnit};
-}
-
-void PacMan::Kill()
-{
-    if (_alive)
-    {
-        _alive = false;
-    }
-}
-
-bool PacMan::IsAlive() const
-{
-    return _alive;
-}
-
-void PacMan::AtePellet()
-{
-    _wakaTimer.Start(_wakaPlaytime);
 }

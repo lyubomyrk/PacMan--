@@ -35,6 +35,11 @@ class Ghost : public MovingEntity
     int _frame;
     const int _maxFrame;
 
+    const Vector2 _startingPosition;
+    const Vector2 _startingNormDir;
+    const float _regularSpeed = GhostSpeed;
+    const float _frigthenedSpeed = GhostSpeed;
+
     Vector2 _position;
     Vector2 _normDir;
     Vector2 _normDirBuffer;
@@ -46,8 +51,8 @@ class Ghost : public MovingEntity
 public:
     Ghost(
         Color color,
-        Vector2 position,
-        Vector2 direction,
+        Vector2 startingPosition,
+        Vector2 startingDirection,
         DirectionComponent *directionComponent,
         MovementComponent *movementCoponent);
     ~Ghost() override;
@@ -55,6 +60,11 @@ public:
     void HandleInput();
     void Update();
     void Draw();
+
+    void Reset();
+    void Scatter();
+    void Frighten();
+    void Stop();
 
     Vector2 GetPosition() const override;
     void SetPosition(Vector2 position) override;
