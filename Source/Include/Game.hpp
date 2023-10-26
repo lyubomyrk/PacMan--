@@ -30,6 +30,7 @@
 #include "MovementComponent.hpp"
 #include "PacMan.hpp"
 #include "Ghost.hpp"
+#include "Timer.hpp"
 
 class Game
 {
@@ -47,6 +48,9 @@ class Game
     Ghost *_pinky;
     Ghost *_inky;
     Ghost *_clyde;
+
+    Timer _introTimer;
+    bool _started;
 
 public:
     Game();

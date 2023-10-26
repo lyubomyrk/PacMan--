@@ -56,6 +56,7 @@ public:
     void Update();
     void Draw();
 
+    void Start();
     void Kill();
     bool IsAlive() const;
     void AtePellet();

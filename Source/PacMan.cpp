@@ -33,7 +33,7 @@ PacMan::PacMan(DirectionComponent *directionComponent, MovementComponent *moveme
     _normDir = Direction::Left();
     _normDirBuffer = _normDir;
     _directionComponent = directionComponent;
-    _speed = PacmanSpeed;
+    _speed = 0.;
     _movementComponent = movementComponent;
 
     _alive = true;
@@ -52,6 +52,8 @@ void PacMan::Reset()
     _position = PacmanStartingPosition;
     _normDir = Direction::Left();
     _normDirBuffer = _normDir;
+
+    _speed = 0.;
 
     _alive = true;
 }
@@ -123,6 +125,11 @@ void PacMan::Draw()
         {SpriteUnitOffset, SpriteUnitOffset},
         rotation,
         _tint);
+}
+
+void PacMan::Start()
+{
+    _speed = PacmanSpeed;
 }
 
 void PacMan::Kill()

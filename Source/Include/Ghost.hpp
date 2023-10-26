@@ -61,6 +61,7 @@ public:
     void Update();
     void Draw();
 
+    void Start();
     void Reset();
     void Scatter();
     void Frighten();

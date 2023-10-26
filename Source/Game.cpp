@@ -38,6 +38,8 @@ Game::Game()
     _pinky = nullptr;
     _inky = nullptr;
     _clyde = nullptr;
+
+    _started = false;
 }
 
 bool Game::Init()
@@ -137,9 +139,22 @@ void Game::Update()
     }
     _pacman->Update();
 
+    _introTimer.Update();
+
     /**
      * Handle game conditions.
      */
+    if (_introTimer.IsFinished())
+    {
+        _pacman->Start();
+        for (Ghost *ghost : _ghosts)
+        {
+            ghost->Start();
+        }
+
+        _started = true;
+    }
+
     Vector2 pacmanPos = _pacman->GetPosition();
     Vector2 pacmanTile = {
         floor(pacmanPos.x / TileUnit), floor(pacmanPos.y / TileUnit)};
@@ -173,7 +188,8 @@ void Game::Update()
     /**
      * Play audio.
      */
-    PlaySoundIfTrue(AssetManager::SSiren, _pacman->IsAlive());
+    PlaySoundIfTrue(AssetManager::SGameIntro, !_started);
+    PlaySoundIfTrue(AssetManager::SSiren, _started);
 
     /**
      * Draw.
@@ -238,4 +254,5 @@ void Game::resetForNextLife()
     }
 
     _introTimer.Start(IntroTime);
+    _started = false;
 }

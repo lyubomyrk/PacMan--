@@ -42,7 +42,7 @@ Ghost::Ghost(
     _normDirBuffer = _normDir;
     _directionComponent = directionComponent;
 
-    _speed = GhostSpeed;
+    _speed = 0.;
     _movementComponent = movementCoponent;
 }
 
@@ -108,12 +108,17 @@ void Ghost::Draw()
         WHITE);
 }
 
+void Ghost::Start()
+{
+    _speed = GhostSpeed;
+}
+
 void Ghost::Reset()
 {
     _position = _startingPosition;
     _normDir = _startingNormDir;
     _normDirBuffer = _normDir;
-    _speed = _regularSpeed;
+    _speed = 0.;
 }
 
 void Ghost::Scatter()
