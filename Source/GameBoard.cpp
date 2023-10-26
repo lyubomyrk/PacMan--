@@ -46,7 +46,7 @@ void GameBoard::Draw()
 
     if constexpr (DEBUG)
     {
-        DrawDebugRecs();
+        drawDebugRecs();
     }
 }
 
@@ -148,7 +148,7 @@ void GameBoard::AddDebugRec(Vector2 position)
     _debugCollisionRecs.push_back(debugColRec);
 }
 
-void GameBoard::DrawDebugRecs()
+void GameBoard::drawDebugRecs()
 {
     for (Rectangle colRec : _debugCollisionRecs)
     {
