@@ -57,4 +57,6 @@ public:
     void Cleanup();
 
 private:
+    void nextLevel();
+    void resetForNextLife();
 };

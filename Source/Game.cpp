@@ -152,11 +152,7 @@ void Game::Update()
 
         if (pacmanTile == ghostTile)
         {
-            _pacman->Reset();
-            for (Ghost *ghost : _ghosts)
-            {
-                ghost->Reset();
-            }
+            resetForNextLife();
             break;
         }
     }
@@ -166,6 +162,11 @@ void Game::Update()
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
         _pacman->AtePellet();
+    }
+
+    if (_gameBoard->Pellets() == 0)
+    {
+        nextLevel();
     }
 
     /**
@@ -219,4 +220,19 @@ void Game::Cleanup()
 
     CloseAudioDevice();
     CloseWindow();
+}
+
+void Game::nextLevel()
+{
+    _gameBoard->Reset();
+    resetForNextLife();
+}
+
+void Game::resetForNextLife()
+{
+    _pacman->Reset();
+    for (Ghost *ghost : _ghosts)
+    {
+        ghost->Reset();
+    }
 }

@@ -39,6 +39,7 @@ public:
     bool IsThere(Vector2 position, Tile tile);
     void Remove(Vector2 position, Tile type);
     void AddDebugRec(Vector2 position);
+    int Pellets() const;
 
 private:
     void drawDebugRecs();

@@ -21,6 +21,7 @@
 
 GameBoard::GameBoard()
 {
+    _pellets = 0;
 }
 
 GameBoard::~GameBoard()
@@ -60,6 +61,12 @@ void GameBoard::Reset()
 
         for (int n = 0; n < BoardColumns; n++)
         {
+            switch (Board[m][n])
+            {
+            case (char)Tile::Pellet:
+                _pellets++;
+                break;
+            }
             row.push_back((Tile)Board[m][n]);
         }
 
@@ -146,6 +153,11 @@ void GameBoard::AddDebugRec(Vector2 position)
         (float)TileUnit, (float)TileUnit};
 
     _debugCollisionRecs.push_back(debugColRec);
+}
+
+int GameBoard::Pellets() const
+{
+    return _pellets;
 }
 
 void GameBoard::drawDebugRecs()
