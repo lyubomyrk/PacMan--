@@ -38,10 +38,6 @@ Game::Game()
     _pinky = nullptr;
     _inky = nullptr;
     _clyde = nullptr;
-    _prevPacmanPos = {0};
-    _prevPacmanDir = {0};
-    _playSiren = false;
-    _playWaka = false;
 }
 
 bool Game::Init()
@@ -148,9 +144,6 @@ void Game::Update()
         floor(pacmanPos.x / TileUnit), floor(pacmanPos.y / TileUnit)};
     Vector2 pacmanDir = _pacman->GetDirection();
 
-    Vector2 prevPacmanTile = {
-        floor(_prevPacmanPos.x / TileUnit), floor(_prevPacmanPos.y / TileUnit)};
-
     for (Ghost *ghost : _ghosts)
     {
         Vector2 ghostPos = ghost->GetPosition();
@@ -168,69 +161,17 @@ void Game::Update()
         }
     }
 
-    // Pacman on new tile.
-    if (pacmanTile != prevPacmanTile)
-    {
-        if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
-        {
-            _playWaka = false;
-        }
-    }
-    // Pacman changes direction.
-    if (pacmanDir != _prevPacmanDir)
-    {
-        if (_gameBoard->IsThere(pacmanPos, Tile::Empty))
-        {
-            _playWaka = false;
-        }
-    }
-    // Pacman hit a wall.
-    if (pacmanPos == _prevPacmanPos)
-    {
-        _playWaka = false;
-    }
-
     // Check if eaten pellet.
     if (_gameBoard->IsThere(pacmanPos, Tile::Pellet))
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
         _pacman->AtePellet();
-        _playWaka = true;
-    }
-
-    if (_pacman->IsAlive())
-    {
-        _playSiren = true;
-    }
-    else
-    {
-        _playSiren = false;
-        _playWaka = false;
     }
 
     /**
      * Play audio.
      */
-    if (_playSiren && !IsSoundPlaying(AssetManager::SSiren))
-    {
-        PlaySound(AssetManager::SSiren);
-    }
-    else if (!_playSiren && IsSoundPlaying(AssetManager::SSiren))
-    {
-        PlaySound(AssetManager::SSiren);
-    }
-
-    // if (_playWaka && !IsSoundPlaying(AssetManager::SWaka))
-    // {
-    //     PlaySound(AssetManager::SWaka);
-    // }
-    // else if (!_playWaka && IsSoundPlaying(AssetManager::SWaka))
-    // {
-    //     StopSound(AssetManager::SWaka);
-    // }
-
-    _prevPacmanPos = pacmanPos;
-    _prevPacmanDir = pacmanDir;
+    PlaySoundIfTrue(AssetManager::SSiren, _pacman->IsAlive());
 
     /**
      * Draw.
