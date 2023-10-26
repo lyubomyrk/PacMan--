@@ -64,7 +64,6 @@ bool Game::Init()
     }
 
     _gameBoard = new GameBoard();
-    _gameBoard->Reset();
 
     _playerDirectionComponent = new PlayerDirectionComponent(_gameBoard);
     _movementComponent = new MovementComponent(_gameBoard);
@@ -107,6 +106,8 @@ bool Game::Init()
     _ghosts.push_back(_pinky);
     _ghosts.push_back(_inky);
     _ghosts.push_back(_clyde);
+
+    nextLevel();
 
     return true;
 }
@@ -235,4 +236,6 @@ void Game::resetForNextLife()
     {
         ghost->Reset();
     }
+
+    _introTimer.Start(IntroTime);
 }

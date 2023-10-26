@@ -54,6 +54,7 @@ void GameBoard::Draw()
 void GameBoard::Reset()
 {
     _gameBoard.clear();
+    _pellets = 0;
 
     for (int m = 0; m < BoardRows; m++)
     {
