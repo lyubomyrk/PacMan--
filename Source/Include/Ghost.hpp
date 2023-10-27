@@ -65,7 +65,6 @@ public:
     void Reset();
     void Scatter();
     void Frighten();
-    void Stop();
 
     Vector2 GetPosition() const override;
     void SetPosition(Vector2 position) override;

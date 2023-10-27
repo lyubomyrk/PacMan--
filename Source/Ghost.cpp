@@ -129,11 +129,6 @@ void Ghost::Frighten()
 {
 }
 
-void Ghost::Stop()
-{
-    _speed = 0.;
-}
-
 Vector2 Ghost::GetPosition() const
 {
     return _position;
