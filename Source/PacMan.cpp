@@ -21,11 +21,11 @@
 #include "AssetManager.hpp"
 
 PacMan::PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent)
-    : _frameRate(PacmanMovingFps),
-      _maxFrame(PacmanMovingFps)
 {
     _spritesheet = AssetManager::TPacMan32;
     _tint = WHITE;
+    _frameRate = PacmanMovingFps;
+    _maxFrame = PacmanMovingFrames;
     _frameTicks = 0;
     _frame = 0;
 
@@ -45,7 +45,10 @@ PacMan::~PacMan()
 
 void PacMan::Reset()
 {
+    _spritesheet = AssetManager::TPacMan32;
     _tint = WHITE;
+    _frameRate = PacmanMovingFps;
+    _maxFrame = PacmanMovingFrames;
     _frameTicks = 0;
     _frame = 0;
 
@@ -84,8 +87,10 @@ void PacMan::Update()
     _movementComponent->Update(this);
 
     _wakaTimer.Update();
+    _deathTimer.Update();
 
     PlaySoundIfTrue(AssetManager::SWaka, !_wakaTimer.IsFinished());
+    PlaySoundIfTrue(AssetManager::SDeath, !_alive && !_deathTimer.IsFinished());
 
     if (_frameTicks++ >= (TargetFps / _frameRate))
     {
@@ -137,12 +142,24 @@ void PacMan::Kill()
     if (_alive)
     {
         _alive = false;
+        _speed = 0.;
+        _deathTimer.Start(_deathPlaytime);
+        _spritesheet = AssetManager::TPacManDeath32;
+        _maxFrame = PacmanDeathFrames;
+        _frameRate = PacmanDeathFps;
+        _frame = 0;
+        _frameTicks = 0;
     }
 }
 
 bool PacMan::IsAlive() const
 {
     return _alive;
+}
+
+bool PacMan::IsDeathFinished()
+{
+    return !_alive && _deathTimer.IsFinished();
 }
 
 void PacMan::AtePellet()

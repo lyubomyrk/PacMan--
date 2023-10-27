@@ -48,6 +48,7 @@ public:
     inline static Sound SGameIntro;
     inline static Sound SWaka;
     inline static Sound SSiren;
+    inline static Sound SDeath;
 
     inline static Font FEmulogic;
 

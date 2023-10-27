@@ -120,6 +120,8 @@ const Vector2 OrangeGhostScatterTargetPosition = {
 const int PacmanSpeed = 2;
 const int PacmanMovingFrames = 3;
 const int PacmanMovingFps = 15;
+const int PacmanDeathFrames = 10;
+const int PacmanDeathFps = 7;
 
 const int GhostSpeed = 2;
 const int GhostEatenSpeed = 4;

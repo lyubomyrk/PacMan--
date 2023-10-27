@@ -113,6 +113,11 @@ void Ghost::Start()
     _speed = GhostSpeed;
 }
 
+void Ghost::Stop()
+{
+    _speed = 0.;
+}
+
 void Ghost::Reset()
 {
     _position = _startingPosition;

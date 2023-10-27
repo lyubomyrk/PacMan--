@@ -144,7 +144,7 @@ void Game::Update()
     /**
      * Handle game conditions.
      */
-    if (_introTimer.IsFinished())
+    if (!_active && _introTimer.IsFinished())
     {
         _pacman->Start();
         for (Ghost *ghost : _ghosts)
@@ -168,7 +168,11 @@ void Game::Update()
 
         if (pacmanTile == ghostTile)
         {
-            nextLife();
+            _pacman->Kill();
+            for (Ghost *ghost : _ghosts)
+            {
+                ghost->Stop();
+            }
             break;
         }
     }
@@ -184,12 +188,16 @@ void Game::Update()
     {
         nextLevel();
     }
+    if (!_pacman->IsAlive() && _pacman->IsDeathFinished())
+    {
+        nextLife();
+    }
 
     /**
      * Play audio.
      */
     PlaySoundIfTrue(AssetManager::SGameIntro, !_active);
-    PlaySoundIfTrue(AssetManager::SSiren, _active);
+    PlaySoundIfTrue(AssetManager::SSiren, _active && _pacman->IsAlive());
 }
 
 void Game::Draw()

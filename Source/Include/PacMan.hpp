@@ -31,9 +31,9 @@ class PacMan : public MovingEntity
     Texture2D _spritesheet;
     Color _tint;
     int _frameTicks;
-    const int _frameRate;
+    int _frameRate;
     int _frame;
-    const int _maxFrame;
+    int _maxFrame;
 
     Vector2 _position;
     Vector2 _normDir;
@@ -48,6 +48,9 @@ class PacMan : public MovingEntity
     Timer _wakaTimer;
     const float _wakaPlaytime = (1. / TargetFps) * (1. / PacmanSpeed) * (TileUnit);
 
+    Timer _deathTimer;
+    const float _deathPlaytime = ((float)PacmanDeathFrames / PacmanDeathFps);
+
 public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
@@ -59,6 +62,7 @@ public:
     void Start();
     void Kill();
     bool IsAlive() const;
+    bool IsDeathFinished();
     void AtePellet();
     void Reset();
 

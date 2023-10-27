@@ -96,6 +96,10 @@ bool AssetManager::LoadAllSounds()
     if (!IsSoundReady(AssetManager::SSiren))
         return false;
 
+    AssetManager::SDeath = LoadSound((SoundsPath + "PacmanDeath.wav").c_str());
+    if (!IsSoundReady(AssetManager::SDeath))
+        return false;
+
     return true;
 }
 
