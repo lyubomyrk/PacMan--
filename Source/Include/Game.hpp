@@ -70,13 +70,25 @@ public:
      */
     bool ShouldExit();
     /**
-     * Update and draw one frame.
+     * Update one frame.
      */
     void Update();
+    /**
+     * Draw one frame.
+     */
     void Draw();
+    /**
+     * Free up loaded assets and allocated resources.
+     */
     void Cleanup();
 
 private:
+    /**
+     * Reset maze and ghosts.
+     */
     void nextLevel();
+    /**
+     * Reset positions and subtract one life.
+     */
     void nextLife();
 };
