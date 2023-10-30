@@ -196,7 +196,7 @@ void Game::Update()
     /**
      * Play audio.
      */
-    PlaySoundIfTrue(AssetManager::SGameIntro, !_active);
+    PlaySoundIfTrue(AssetManager::SGameIntro, !_active && _pacman->IsAlive());
     PlaySoundIfTrue(AssetManager::SSiren, _active && _pacman->IsAlive());
 }
 
