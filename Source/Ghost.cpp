@@ -26,6 +26,7 @@ Ghost::Ghost(
     Vector2 startingDirection,
     DirectionComponent *scatterDirectionComponent,
     DirectionComponent *chaseDirectionComponent,
+    DirectionComponent *randomDirectionComponent,
     MovementComponent *movementCoponent)
     : _startingPosition(startingPosition),
       _startingNormDir(startingDirection),
@@ -49,6 +50,9 @@ Ghost::Ghost(
 
     _behaviorTimer.Start(GhostScatterTime);
     _chasing = false;
+
+    _frightened = false;
+    _randomDirectionComponent = randomDirectionComponent;
 }
 
 Ghost::~Ghost()
@@ -57,7 +61,11 @@ Ghost::~Ghost()
 
 void Ghost::HandleInput()
 {
-    if (_chasing)
+    if (_frightened)
+    {
+        _randomDirectionComponent->Update(this);
+    }
+    else if (_chasing)
     {
         _chaseDirectionComponent->Update(this);
     }
@@ -80,7 +88,16 @@ void Ghost::Update()
         }
     }
 
-    if (_speed != 0.)
+    if (_speed != 0. && _frightened)
+        _frightenedTimer.Update();
+
+    if (_frightened && _frightenedTimer.IsFinished())
+    {
+        _frightened = false;
+        _speed = GhostSpeed;
+    }
+
+    if (_speed != 0. && !_frightened)
         _behaviorTimer.Update();
 
     if (_behaviorTimer.IsFinished())
@@ -95,11 +112,20 @@ void Ghost::Update()
             _behaviorTimer.Start(GhostChaseTime);
             _chasing = true;
         }
+
+        _normDir = -_normDir;
     }
 }
 
 void Ghost::Draw()
 {
+    Color bodyColor = _tint;
+
+    if (_frightened)
+    {
+        bodyColor = BLUE;
+    }
+
     // Draw body.
     DrawTexturePro(
         _spritesheetBody,
@@ -107,11 +133,15 @@ void Ghost::Draw()
         {_position.x, _position.y, SpriteUnit, SpriteUnit},
         {SpriteUnitOffset, SpriteUnitOffset},
         0.,
-        _tint);
+        bodyColor);
 
     // Draw eyes.
     int eyeFrame;
-    if (_normDir == Direction::Right())
+    if (_frightened)
+    {
+        eyeFrame = 4;
+    }
+    else if (_normDir == Direction::Right())
     {
         eyeFrame = 0;
     }
@@ -164,6 +194,9 @@ void Ghost::Scatter()
 
 void Ghost::Frighten()
 {
+    _frightened = true;
+    _frightenedTimer.Start(EnergizerTime);
+    _speed = GhostSpeed / 2;
 }
 
 Vector2 Ghost::GetPosition() const

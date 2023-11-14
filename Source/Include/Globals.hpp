@@ -131,7 +131,7 @@ const float GhostScatterTime = 7.;
 const float GhostChaseTime = 20.;
 
 const float IntroTime = 5.0;
-const float EnergizerTime = 3.0;
+const float EnergizerTime = 6.0;
 
 class Direction
 {

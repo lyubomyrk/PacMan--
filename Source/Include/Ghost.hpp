@@ -53,6 +53,10 @@ class Ghost : public MovingEntity
     Timer _behaviorTimer;
     bool _chasing;
 
+    Timer _frightenedTimer;
+    bool _frightened;
+    DirectionComponent *_randomDirectionComponent;
+
 public:
     Ghost(
         Color color,
@@ -60,6 +64,7 @@ public:
         Vector2 startingDirection,
         DirectionComponent *scatterDirectionComponent,
         DirectionComponent *chaseDirectionComponent,
+        DirectionComponent *randomDirectionComponent,
         MovementComponent *movementCoponent);
     ~Ghost() override;
 

@@ -59,6 +59,7 @@ void PacMan::Reset()
     _speed = 0.;
 
     _alive = true;
+    _energized = false;
 }
 
 void PacMan::HandleInput()
@@ -88,6 +89,12 @@ void PacMan::Update()
 
     _wakaTimer.Update();
     _deathTimer.Update();
+    _energizedTimer.Update();
+
+    if (_energized && _energizedTimer.IsFinished())
+    {
+        _energized = false;
+    }
 
     PlaySoundIfTrue(AssetManager::SWaka, !_wakaTimer.IsFinished());
     PlaySoundIfTrue(AssetManager::SDeath, !_alive && !_deathTimer.IsFinished());
@@ -162,9 +169,20 @@ bool PacMan::IsDeathFinished()
     return !_alive && _deathTimer.IsFinished();
 }
 
+bool PacMan::IsEnergized() const
+{
+    return _energized;
+}
+
 void PacMan::AtePellet()
 {
     _wakaTimer.Start(_wakaPlaytime);
+}
+
+void PacMan::Energize()
+{
+    _energizedTimer.Start(EnergizerTime);
+    _energized = true;
 }
 
 Vector2 PacMan::GetPosition() const

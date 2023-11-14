@@ -49,6 +49,9 @@ class Game
     DirectionComponent *_pinkyChaseDirectionComponent;
     DirectionComponent *_inkyChaseDirectionComponent;
     DirectionComponent *_clydeChaseDirectionComponent;
+    // Ghost frightened
+    DirectionComponent *_randomDirectionComponent;
+
     MovementComponent *_movementComponent;
 
     PacMan *_pacman;

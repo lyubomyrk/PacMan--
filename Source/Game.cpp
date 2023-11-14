@@ -21,6 +21,7 @@
 #include "Globals.hpp"
 #include "AssetManager.hpp"
 #include "ScatterGhostDirectionComponent.hpp"
+#include "RandomDirectionComponent.hpp"
 
 using namespace std;
 
@@ -73,6 +74,8 @@ bool Game::Init()
 
     _pacman = new PacMan(_playerDirectionComponent, _movementComponent);
 
+    _randomDirectionComponent = new RandomDirectionComponent(_gameBoard);
+
     _blinkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, RedGhostScatterTargetPosition);
     _blinkyChaseDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
     _blinky = new Ghost(
@@ -81,6 +84,7 @@ bool Game::Init()
         Direction::Left(),
         _blinkyScatterDirectionComponent,
         _blinkyChaseDirectionComponent,
+        _randomDirectionComponent,
         _movementComponent);
 
     _pinkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, PinkGhostScatterTargetPosition);
@@ -91,6 +95,7 @@ bool Game::Init()
         Direction::Right(),
         _pinkyScatterDirectionComponent,
         _pinkyChaseDirectionComponent,
+        _randomDirectionComponent,
         _movementComponent);
 
     _inkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, BlueGhostScatterTargetPosition);
@@ -101,6 +106,7 @@ bool Game::Init()
         Direction::Right(),
         _inkyScatterDirectionComponent,
         _inkyChaseDirectionComponent,
+        _randomDirectionComponent,
         _movementComponent);
 
     _clydeScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, OrangeGhostScatterTargetPosition);
@@ -111,6 +117,7 @@ bool Game::Init()
         Direction::Left(),
         _clydeScatterDirectionComponent,
         _clydeChaseDirectionComponent,
+        _randomDirectionComponent,
         _movementComponent);
 
     _ghosts.push_back(_blinky);
@@ -175,7 +182,7 @@ void Game::Update()
         Vector2 ghostTile = {
             floor(ghostPos.x / TileUnit), floor(ghostPos.y / TileUnit)};
 
-        if (pacmanTile == ghostTile)
+        if (pacmanTile == ghostTile && !_pacman->IsEnergized())
         {
             _pacman->Kill();
             for (Ghost *ghost : _ghosts)
@@ -191,6 +198,15 @@ void Game::Update()
     {
         _gameBoard->Remove(pacmanPos, Tile::Pellet);
         _pacman->AtePellet();
+    }
+    if (_gameBoard->IsThere(pacmanPos, Tile::Energizer))
+    {
+        _gameBoard->Remove(pacmanPos, Tile::Energizer);
+        _pacman->Energize();
+        for (Ghost *ghost : _ghosts)
+        {
+            ghost->Frighten();
+        }
     }
 
     if (_gameBoard->Pellets() == 0)
@@ -258,6 +274,8 @@ void Game::Cleanup()
         delete _inkyChaseDirectionComponent;
     if (_clydeChaseDirectionComponent)
         delete _clydeChaseDirectionComponent;
+    if (_randomDirectionComponent)
+        delete _randomDirectionComponent;
     if (_gameBoard)
         delete _gameBoard;
 

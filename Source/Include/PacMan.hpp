@@ -51,6 +51,9 @@ class PacMan : public MovingEntity
     Timer _deathTimer;
     const float _deathPlaytime = ((float)PacmanDeathFrames / PacmanDeathFps);
 
+    Timer _energizedTimer;
+    bool _energized;
+
 public:
     PacMan(DirectionComponent *directionComponent, MovementComponent *movementComponent);
     ~PacMan() override;
@@ -63,7 +66,9 @@ public:
     void Kill();
     bool IsAlive() const;
     bool IsDeathFinished();
+    bool IsEnergized() const;
     void AtePellet();
+    void Energize();
     void Reset();
 
     Vector2 GetPosition() const override;
