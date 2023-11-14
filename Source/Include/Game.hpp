@@ -36,12 +36,21 @@ class Game
 {
     GameBoard *_gameBoard;
 
+    // Player
     DirectionComponent *_playerDirectionComponent;
-    DirectionComponent *_blinkyDirectionComponent;
-    DirectionComponent *_pinkyDirectionComponent;
-    DirectionComponent *_inkyDirectionComponent;
-    DirectionComponent *_clydeDirectionComponent;
+
+    // Ghost scatter
+    DirectionComponent *_blinkyScatterDirectionComponent;
+    DirectionComponent *_pinkyScatterDirectionComponent;
+    DirectionComponent *_inkyScatterDirectionComponent;
+    DirectionComponent *_clydeScatterDirectionComponent;
+    // Ghost chase
+    DirectionComponent *_blinkyChaseDirectionComponent;
+    DirectionComponent *_pinkyChaseDirectionComponent;
+    DirectionComponent *_inkyChaseDirectionComponent;
+    DirectionComponent *_clydeChaseDirectionComponent;
     MovementComponent *_movementComponent;
+
     PacMan *_pacman;
     vector<Ghost *> _ghosts;
     Ghost *_blinky;

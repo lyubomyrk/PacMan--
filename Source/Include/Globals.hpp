@@ -127,6 +127,8 @@ const int GhostSpeed = 2;
 const int GhostEatenSpeed = 4;
 const int GhostMovingFrames = 6;
 const int GhostMovingFps = 15;
+const float GhostScatterTime = 7.;
+const float GhostChaseTime = 20.;
 
 const float IntroTime = 5.0;
 const float EnergizerTime = 3.0;

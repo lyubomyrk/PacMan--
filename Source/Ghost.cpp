@@ -24,7 +24,8 @@ Ghost::Ghost(
     Color color,
     Vector2 startingPosition,
     Vector2 startingDirection,
-    DirectionComponent *directionComponent,
+    DirectionComponent *scatterDirectionComponent,
+    DirectionComponent *chaseDirectionComponent,
     MovementComponent *movementCoponent)
     : _startingPosition(startingPosition),
       _startingNormDir(startingDirection),
@@ -40,10 +41,14 @@ Ghost::Ghost(
     _position = _startingPosition;
     _normDir = _startingNormDir;
     _normDirBuffer = _normDir;
-    _directionComponent = directionComponent;
+    _scatterDirectionCompoenent = scatterDirectionComponent;
+    _chaseDirectionComponent = chaseDirectionComponent;
 
     _speed = 0.;
     _movementComponent = movementCoponent;
+
+    _behaviorTimer.Start(GhostScatterTime);
+    _chasing = false;
 }
 
 Ghost::~Ghost()
@@ -52,7 +57,14 @@ Ghost::~Ghost()
 
 void Ghost::HandleInput()
 {
-    _directionComponent->Update(this);
+    if (_chasing)
+    {
+        _chaseDirectionComponent->Update(this);
+    }
+    else
+    {
+        _scatterDirectionCompoenent->Update(this);
+    }
 }
 
 void Ghost::Update()
@@ -65,6 +77,23 @@ void Ghost::Update()
         if (_frame++ >= _maxFrame)
         {
             _frame = 0;
+        }
+    }
+
+    if (_speed != 0.)
+        _behaviorTimer.Update();
+
+    if (_behaviorTimer.IsFinished())
+    {
+        if (_chasing)
+        {
+            _behaviorTimer.Start(GhostScatterTime);
+            _chasing = false;
+        }
+        else
+        {
+            _behaviorTimer.Start(GhostChaseTime);
+            _chasing = true;
         }
     }
 }
@@ -124,6 +153,9 @@ void Ghost::Reset()
     _normDir = _startingNormDir;
     _normDirBuffer = _normDir;
     _speed = 0.;
+
+    _chasing = false;
+    _behaviorTimer.Start(GhostScatterTime);
 }
 
 void Ghost::Scatter()

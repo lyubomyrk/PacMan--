@@ -20,6 +20,7 @@
 #include "Game.hpp"
 #include "Globals.hpp"
 #include "AssetManager.hpp"
+#include "ScatterGhostDirectionComponent.hpp"
 
 using namespace std;
 
@@ -27,10 +28,10 @@ Game::Game()
 {
     _gameBoard = nullptr;
     _playerDirectionComponent = nullptr;
-    _blinkyDirectionComponent = nullptr;
-    _pinkyDirectionComponent = nullptr;
-    _inkyDirectionComponent = nullptr;
-    _clydeDirectionComponent = nullptr;
+    _blinkyChaseDirectionComponent = nullptr;
+    _pinkyChaseDirectionComponent = nullptr;
+    _inkyChaseDirectionComponent = nullptr;
+    _clydeChaseDirectionComponent = nullptr;
     _movementComponent = nullptr;
     _ghosts.clear();
     _pacman = nullptr;
@@ -72,36 +73,44 @@ bool Game::Init()
 
     _pacman = new PacMan(_playerDirectionComponent, _movementComponent);
 
-    _blinkyDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
+    _blinkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, RedGhostScatterTargetPosition);
+    _blinkyChaseDirectionComponent = new BlinkyDirectionComponent(_gameBoard, _pacman);
     _blinky = new Ghost(
         RED,
         RedGhostStartingPosition,
         Direction::Left(),
-        _blinkyDirectionComponent,
+        _blinkyScatterDirectionComponent,
+        _blinkyChaseDirectionComponent,
         _movementComponent);
 
-    _pinkyDirectionComponent = new PinkyDirectionComponent(_gameBoard, _pacman);
+    _pinkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, PinkGhostScatterTargetPosition);
+    _pinkyChaseDirectionComponent = new PinkyDirectionComponent(_gameBoard, _pacman);
     _pinky = new Ghost(
         PINK,
         RedGhostStartingPosition,
         Direction::Right(),
-        _pinkyDirectionComponent,
+        _pinkyScatterDirectionComponent,
+        _pinkyChaseDirectionComponent,
         _movementComponent);
 
-    _inkyDirectionComponent = new InkyDirectionComponent(_gameBoard, _pacman, _blinky);
+    _inkyScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, BlueGhostScatterTargetPosition);
+    _inkyChaseDirectionComponent = new InkyDirectionComponent(_gameBoard, _pacman, _blinky);
     _inky = new Ghost(
         SKYBLUE,
         RedGhostStartingPosition,
         Direction::Right(),
-        _inkyDirectionComponent,
+        _inkyScatterDirectionComponent,
+        _inkyChaseDirectionComponent,
         _movementComponent);
 
-    _clydeDirectionComponent = new ClydeDirectionComponent(_gameBoard, _pacman);
+    _clydeScatterDirectionComponent = new ScatterGhostDirectionComponent(_gameBoard, OrangeGhostScatterTargetPosition);
+    _clydeChaseDirectionComponent = new ClydeDirectionComponent(_gameBoard, _pacman);
     _clyde = new Ghost(
         ORANGE,
         RedGhostStartingPosition,
         Direction::Left(),
-        _clydeDirectionComponent,
+        _clydeScatterDirectionComponent,
+        _clydeChaseDirectionComponent,
         _movementComponent);
 
     _ghosts.push_back(_blinky);
@@ -233,14 +242,22 @@ void Game::Cleanup()
         delete _movementComponent;
     if (_playerDirectionComponent)
         delete _playerDirectionComponent;
-    if (_blinkyDirectionComponent)
-        delete _blinkyDirectionComponent;
-    if (_pinkyDirectionComponent)
-        delete _pinkyDirectionComponent;
-    if (_inkyDirectionComponent)
-        delete _inkyDirectionComponent;
-    if (_clydeDirectionComponent)
-        delete _clydeDirectionComponent;
+    if (_blinkyScatterDirectionComponent)
+        delete _blinkyScatterDirectionComponent;
+    if (_pinkyScatterDirectionComponent)
+        delete _pinkyScatterDirectionComponent;
+    if (_inkyScatterDirectionComponent)
+        delete _inkyScatterDirectionComponent;
+    if (_clydeScatterDirectionComponent)
+        delete _clydeScatterDirectionComponent;
+    if (_blinkyChaseDirectionComponent)
+        delete _blinkyChaseDirectionComponent;
+    if (_pinkyChaseDirectionComponent)
+        delete _pinkyChaseDirectionComponent;
+    if (_inkyChaseDirectionComponent)
+        delete _inkyChaseDirectionComponent;
+    if (_clydeChaseDirectionComponent)
+        delete _clydeChaseDirectionComponent;
     if (_gameBoard)
         delete _gameBoard;
 

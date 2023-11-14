@@ -24,6 +24,7 @@
 #include "MovingEntity.hpp"
 #include "DirectionComponent.hpp"
 #include "MovementComponent.hpp"
+#include "Timer.hpp"
 
 class Ghost : public MovingEntity
 {
@@ -43,17 +44,22 @@ class Ghost : public MovingEntity
     Vector2 _position;
     Vector2 _normDir;
     Vector2 _normDirBuffer;
-    DirectionComponent *_directionComponent;
+    DirectionComponent *_scatterDirectionCompoenent;
+    DirectionComponent *_chaseDirectionComponent;
 
     float _speed;
     MovementComponent *_movementComponent;
+
+    Timer _behaviorTimer;
+    bool _chasing;
 
 public:
     Ghost(
         Color color,
         Vector2 startingPosition,
         Vector2 startingDirection,
-        DirectionComponent *directionComponent,
+        DirectionComponent *scatterDirectionComponent,
+        DirectionComponent *chaseDirectionComponent,
         MovementComponent *movementCoponent);
     ~Ghost() override;
 
