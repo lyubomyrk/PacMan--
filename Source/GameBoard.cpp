@@ -38,9 +38,20 @@ void GameBoard::Draw()
     {
         for (int j = 0; j < BoardColumns; j++)
         {
-            if (_gameBoard[i][j] == Tile::Pellet)
+            int x = j * TileUnit;
+            int y = i * TileUnit;
+            switch (_gameBoard[i][j])
+            {
+            case Tile::Pellet:
             {
                 DrawTexture(AssetManager::TPellet24, j * TileUnit, i * TileUnit, WHITE);
+                break;
+            }
+            case Tile::Energizer:
+                DrawTexture(AssetManager::TEnergizer24, x, y, YELLOW);
+                break;
+            default:
+                break;
             }
         }
     }
@@ -55,6 +66,7 @@ void GameBoard::Reset()
 {
     _gameBoard.clear();
     _pellets = 0;
+    _energizers = 0;
 
     for (int m = 0; m < BoardRows; m++)
     {
@@ -66,6 +78,9 @@ void GameBoard::Reset()
             {
             case (char)Tile::Pellet:
                 _pellets++;
+                break;
+            case (char)Tile::Energizer:
+                _energizers++;
                 break;
             }
             row.push_back((Tile)Board[m][n]);
@@ -140,6 +155,9 @@ void GameBoard::Remove(Vector2 position, Tile type)
         case Tile::Pellet:
             _pellets--;
             break;
+        case Tile::Energizer:
+            _energizers--;
+            break;
         default:
             break;
         }
@@ -159,6 +177,11 @@ void GameBoard::AddDebugRec(Vector2 position)
 int GameBoard::Pellets() const
 {
     return _pellets;
+}
+
+int GameBoard::Energizers() const
+{
+    return _energizers;
 }
 
 void GameBoard::drawDebugRecs()

@@ -26,6 +26,7 @@ class GameBoard
     vector<vector<Tile>> _gameBoard;
 
     int _pellets;
+    int _energizers;
 
     vector<Rectangle> _debugCollisionRecs;
 
@@ -40,6 +41,7 @@ public:
     void Remove(Vector2 position, Tile type);
     void AddDebugRec(Vector2 position);
     int Pellets() const;
+    int Energizers() const;
 
 private:
     void drawDebugRecs();
