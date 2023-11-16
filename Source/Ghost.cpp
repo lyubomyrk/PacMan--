@@ -94,13 +94,14 @@ void Ghost::Update()
     if (_frightened && _frightenedTimer.IsFinished())
     {
         _frightened = false;
+        _chasing = true;
         _speed = GhostSpeed;
     }
 
     if (_speed != 0. && !_frightened)
         _behaviorTimer.Update();
 
-    if (_behaviorTimer.IsFinished())
+    if (_speed != 0. && _behaviorTimer.IsFinished())
     {
         if (_chasing)
         {
@@ -186,6 +187,8 @@ void Ghost::Reset()
 
     _chasing = false;
     _behaviorTimer.Start(GhostScatterTime);
+
+    _frightened = false;
 }
 
 void Ghost::Scatter()
